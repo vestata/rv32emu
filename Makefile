@@ -127,6 +127,10 @@ endif
 ENABLE_EXT_C ?= 1
 $(call set-feature, EXT_C)
 
+# Vector extension instructions
+ENABLE_EXT_V ?= 1
+$(call set-feature, EXT_V)
+
 # Control and Status Register (CSR)
 ENABLE_Zicsr ?= 1
 $(call set-feature, Zicsr)
