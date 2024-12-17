@@ -2987,3 +2987,1225 @@ RVOP(
     }))
 
 #endif
+
+
+#if RV32_HAS(EXT_V)
+    RVOP(vsetvli, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsetivli, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsetvl, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    
+    RVOP(vle8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vle16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vle32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vle64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg2e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg3e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg4e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg5e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg6e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg7e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg8e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg2e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg3e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg4e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg5e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg6e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg7e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg8e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg2e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg3e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg4e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg5e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg6e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg7e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg8e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg2e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg3e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg4e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg5e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg6e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg7e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg8e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl1re8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl1re16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl1re32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl1re64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl2re8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl2re16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl2re32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl2re64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl4re8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl4re16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl4re32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl4re64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl8re8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl8re16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl8re32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vl8re64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlm_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vle8ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vle16ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vle32ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vle64ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg2e8ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg3e8ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg4e8ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg5e8ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg6e8ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg7e8ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg8e8ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg2e16ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg3e16ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg4e16ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg5e16ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg6e16ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg7e16ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg8e16ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg2e32ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg3e32ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg4e32ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg5e32ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg6e32ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg7e32ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg8e32ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg2e64ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg3e64ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg4e64ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg5e64ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg6e64ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg7e64ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlseg8e64ff_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg2ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg3ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg4ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg5ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg6ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg7ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg8ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg2ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg3ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg4ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg5ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg6ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg7ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg8ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg2ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg3ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg4ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg5ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg6ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg7ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg8ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg2ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg3ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg4ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg5ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg6ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg7ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vluxseg8ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlse8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlse16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlse32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlse64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg2e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg3e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg4e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg5e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg6e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg7e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg8e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg2e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg3e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg4e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg5e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg6e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg7e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg8e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg2e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg3e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg4e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg5e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg6e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg7e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg8e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg2e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg3e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg4e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg5e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg6e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg7e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vlsseg8e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg2ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg3ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg4ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg5ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg6ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg7ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg8ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg2ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg3ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg4ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg5ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg6ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg7ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg8ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg2ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg3ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg4ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg5ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg6ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg7ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg8ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg2ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg3ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg4ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg5ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg6ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg7ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vloxseg8ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+
+    RVOP(vse8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vse16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vse32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vse64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg2e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg3e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg4e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg5e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg6e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg7e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg8e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg2e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg3e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg4e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg5e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg6e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg7e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg8e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg2e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg3e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg4e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg5e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg6e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg7e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg8e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg2e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg3e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg4e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg5e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg6e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg7e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsseg8e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vs1r_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vs2r_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vs4r_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vs8r_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsm_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg2ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg3ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg4ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg5ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg6ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg7ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg8ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg2ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg3ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg4ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg5ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg6ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg7ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg8ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg2ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg3ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg4ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg5ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg6ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg7ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg8ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg2ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg3ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg4ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg5ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg6ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg7ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsuxseg8ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsse8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsse16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsse32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsse64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg2e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg3e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg4e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg5e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg6e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg7e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg8e8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg2e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg3e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg4e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg5e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg6e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg7e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg8e16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg2e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg3e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg4e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg5e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg6e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg7e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg8e32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg2e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg3e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg4e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg5e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg6e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg7e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vssseg8e64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg2ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg3ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg4ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg5ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg6ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg7ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg8ei8_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg2ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg3ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg4ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg5ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg6ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg7ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg8ei16_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg2ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg3ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg4ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg5ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg6ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg7ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg8ei32_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg2ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg3ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg4ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg5ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg6ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg7ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    RVOP(vsoxseg8ei64_v, { for (int i = 0; i < 4; i++) {
+        rv->V[rv_reg_zero][i] = 0;
+    } }, GEN({/* no operation */}))
+    
+    RVOP(vadd_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vadd_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vadd_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsub_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsub_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vrsub_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vrsub_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vminu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vminu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmin_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmin_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmaxu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmaxu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmax_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmax_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vand_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vand_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vand_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vor_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vor_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vor_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vxor_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vxor_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vxor_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vrgather_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vrgather_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vrgather_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vslideup_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vslideup_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vrgatherei16_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vslidedown_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vslidedown_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vadc_vvm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vadc_vxm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vadc_vim, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmadc_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmadc_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmadc_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsbc_vvm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsbc_vxm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsbc_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsbc_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmerge_vvm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmerge_vxm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmerge_vim, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmv_v_v, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmv_v_x, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmv_v_i, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmseq_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmseq_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmseq_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsne_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsne_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsne_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsltu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsltu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmslt_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmslt_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsleu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsleu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsleu_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsle_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsle_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsle_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsgtu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsgtu_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsgt_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsgt_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsaddu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsaddu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsaddu_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsadd_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsadd_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsadd_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vssubu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vssubu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vssub_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vssub_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsll_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsll_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsll_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsmul_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsmul_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsrl_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsrl_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsrl_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsra_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsra_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vsra_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vssrl_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vssrl_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vssrl_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vssra_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vssra_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vssra_vi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnsrl_wv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnsrl_wx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnsrl_wi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnsra_wv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnsra_wx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnsra_wi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnclipu_wv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnclipu_wx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnclipu_wi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnclip_wv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnclip_wx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnclip_wi, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwredsumu_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwredsum_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+
+
+    RVOP(vredsum_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vredand_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vredor_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vredxor_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vredminu_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vredmin_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vredmaxu_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vredmax_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vaaddu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vaaddu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vaadd_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vaadd_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vasubu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vasubu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vasub_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vasub_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vslide1up_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vslide1down_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vcompress_vm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmandn_mm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmand_mm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmor_mm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmxor_mm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmorn_mm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmnand_mm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmnor_mm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmxnor_mm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vdivu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vdivu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vdiv_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vdiv_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vremu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vremu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vrem_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vrem_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmulhu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmulhu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmul_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmul_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmulhsu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmulhsu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmulh_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmulh_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmadd_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmadd_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnmsub_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnmsub_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmacc_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmacc_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnmsac_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vnmsac_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwaddu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwaddu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwadd_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwadd_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwsubu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwsubu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwsub_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwsub_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwaddu_wv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwaddu_wx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwadd_wv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwadd_wx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwsubu_wv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwsubu_wx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwsub_wv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwsub_wx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwmulu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwmulu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwmulsu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwmulsu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwmul_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwmul_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwmaccu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwmaccu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwmacc_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwmacc_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwmaccus_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwmaccsu_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vwmaccsu_vx, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmv_s_x, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmv_x_s, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vcpop_m, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfirst_m, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsbf_m, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsof_m, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmsif_m, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(viota_m, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vid_v, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+
+    RVOP(vfadd_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfadd_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfredusum_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfsub_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfsub_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfredosum_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmin_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmin_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfredmin_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmax_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmax_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfredmax_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfsgnj_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfsgnj_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfsgnjn_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfsgnjn_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfsgnjx_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfsgnjx_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfslide1up_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfslide1down_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmerge_vfm, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmv_v_f, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmfeq_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmfeq_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmfle_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmfle_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmflt_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmflt_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmfne_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmfne_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmfgt_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vmfge_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfdiv_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfdiv_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfrdiv_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmul_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmul_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfrsub_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmadd_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmadd_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfnmadd_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfnmadd_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmsub_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmsub_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfnmsub_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfnmsub_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmacc_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmacc_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfnmacc_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfnmacc_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmsac_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfmsac_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfnmsac_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfnmsac_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwadd_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwadd_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwredusum_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwsub_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwsub_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwredosum_vs, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwadd_wv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwadd_wf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwsub_wv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwsub_wf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwmul_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwmul_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwmacc_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwmacc_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwnmacc_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwnmacc_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwmsac_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwmsac_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwnmsac_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vfwnmsac_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+
+#endif
