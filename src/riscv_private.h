@@ -76,6 +76,15 @@ enum {
     CSR_CYCLEH = 0xC80,
     CSR_TIMEH = 0xC81,
     CSR_INSTRETH = 0xC82,
+
+    /* vector extension */
+    CSR_VSTART = 0x008,
+    CSR_VXSAT = 0x009,
+    CSR_VXRM = 0x00A,
+    CSR_VCSR = 0x00F,
+    CSR_VL = 0xC20,
+    CSR_VTYPE = 0xC21,
+    CSR_LENB = 0xC22,
 };
 
 /* translated basic block */
@@ -207,6 +216,25 @@ struct riscv_internal {
      * executing signal handler.
      */
     uint32_t last_csr_sepc;
+#endif
+
+#if RV32_HAS(EXT_V)    
+    vector128_t V[N_RV_REGS];
+
+    /* Fixme:Temporary way to set configuration for vectors. */
+    bool vma;
+    bool vta;
+    uint8_t vsew;
+    uint8_t vlmul;
+
+    /* ???: Figure out how to control them. */
+    uint32_t csr_vstart;   /* +Vector start position */
+    uint32_t csr_vxsat;    /* +Fixed-Point Saturate Flag */
+    uint32_t csr_vxrm;     /* +Fixed-Point Rounding Mode */
+    uint32_t csr_vcsr;     /* +Vector control and status +register */
+    uint32_t csr_vl;       /* +Vector length */
+    uint32_t csr_vtype;    /* +Vector data type register */
+    uint32_t csr_vlenb;   /* VLEN/8 (vector register length in bytes) */
 #endif
 };
 
