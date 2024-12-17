@@ -637,7 +637,9 @@ retranslate:
             break;
         }
         ir->impl = dispatch_table[ir->opcode];
-        ir->pc = block->pc_end; /* compute the end of pc */
+        ir->pc = block->pc_end;
+
+        /* compute the end of pc */
         block->pc_end += is_compressed(insn) ? 2 : 4;
         block->n_insn++;
         prev_ir = ir;
