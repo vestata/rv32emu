@@ -231,7 +231,228 @@ enum op_field {
             _(cflw, 0, 2, 1, ENC(rs1, rd))             \
             _(cfsw, 0, 2, 1, ENC(rs1, rs2))            \
         )                                              \
+    )                                                  \
+    /* Zve32x Standard Extension */                    \
+    IIF(RV32_HAS(EXT_V))(                              \
+        /* Configuration-setting Instructions */       \
+        _(vsetvli, 0, 4, 0, ENC(rs1, rd))              \
+        _(vsetivli, 0, 4, 0, ENC(rs1, rd))             \
+        _(vsetvl, 0, 4, 0, ENC(rs1, rd))               \
+        /* Vectore Load */                             \
+        _(vle8_v, 0, 4, 0, ENC(rs1, vd))               \
+        _(vle16_v, 0, 4, 0, ENC(rs1, vd))              \
+        _(vle32_v, 0, 4, 0, ENC(rs1, vd))              \
+        _(vle64_v, 0, 4, 0, ENC(rs1, vd))              \
+        _(vlseg2e8_v, 0, 4, 0, ENC(rs1, vd))           \
+        _(vlseg3e8_v, 0, 4, 0, ENC(rs1, vd))           \
+        _(vlseg4e8_v, 0, 4, 0, ENC(rs1, vd))           \
+        _(vlseg5e8_v, 0, 4, 0, ENC(rs1, vd))           \
+        _(vlseg6e8_v, 0, 4, 0, ENC(rs1, vd))           \
+        _(vlseg7e8_v, 0, 4, 0, ENC(rs1, vd))           \
+        _(vlseg8e8_v, 0, 4, 0, ENC(rs1, vd))           \
+        _(vlseg2e16_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg3e16_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg4e16_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg5e16_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg6e16_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg7e16_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg8e16_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg2e32_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg3e32_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg4e32_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg5e32_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg6e32_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg7e32_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg8e32_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg2e64_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg3e64_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg4e64_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg5e64_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg6e64_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg7e64_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlseg8e64_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vl1re8_v, 0, 4, 0, ENC(rs1, vd))             \
+        _(vl1re16_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl1re32_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl1re64_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl2re8_v, 0, 4, 0, ENC(rs1, vd))             \
+        _(vl2re16_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl2re32_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl2re64_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl4re8_v, 0, 4, 0, ENC(rs1, vd))             \
+        _(vl4re16_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl4re32_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl4re64_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl8re8_v, 0, 4, 0, ENC(rs1, vd))             \
+        _(vl8re16_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl8re32_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl8re64_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vlm_v, 0, 4, 0, ENC(rs1, vd))                \
+        _(vle8ff_v, 0, 4, 0, ENC(rs1, vd))             \
+        _(vle16ff_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vle32ff_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vle64ff_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vlseg2e8ff_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlseg3e8ff_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlseg4e8ff_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlseg5e8ff_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlseg6e8ff_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlseg7e8ff_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlseg8e8ff_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlseg2e16ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg3e16ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg4e16ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg5e16ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg6e16ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg7e16ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg8e16ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg2e32ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg3e32ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg4e32ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg5e32ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg6e32ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg7e32ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg8e32ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg2e64ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg3e64ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg4e64ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg5e64ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg6e64ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg7e64ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlseg8e64ff_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxei8_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vluxei16_v, 0, 4, 0, ENC(rs1, vd))           \
+        _(vluxei32_v, 0, 4, 0, ENC(rs1, vd))           \
+        _(vluxei64_v, 0, 4, 0, ENC(rs1, vd))           \
+        _(vluxseg2e8_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vluxseg3e8_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vluxseg4e8_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vluxseg5e8_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vluxseg6e8_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vluxseg7e8_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vluxseg8e8_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vluxseg2e16_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg3e16_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg4e16_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg5e16_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg6e16_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg7e16_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg8e16_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg2e32_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg3e32_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg4e32_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg5e32_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg6e32_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg7e32_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg8e32_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg2e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg3e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg4e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg5e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg6e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg7e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg8e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vlse8_v, 0, 4, 0, ENC(rs1, vd))              \
+        _(vlse16_v, 0, 4, 0, ENC(rs1, vd))             \
+        _(vlse32_v, 0, 4, 0, ENC(rs1, vd))             \
+        _(vlse64_v, 0, 4, 0, ENC(rs1, vd))             \
+        _(vlsseg2e8_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlsseg3e8_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlsseg4e8_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlsseg5e8_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlsseg6e8_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlsseg7e8_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlsseg8e8_v, 0, 4, 0, ENC(rs1, vd))          \
+        _(vlsseg2e16_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg3e16_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg4e16_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg5e16_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg6e16_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg7e16_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg8e16_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg2e32_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg3e32_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg4e32_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg5e32_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg6e32_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg7e32_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg8e32_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg2e64_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg3e64_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg4e64_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg5e64_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg6e64_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg7e64_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vlsseg8e64_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vloxei8_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vloxei16_v, 0, 4, 0, ENC(rs1, vd))           \
+        _(vloxei32_v, 0, 4, 0, ENC(rs1, vd))           \
+        _(vloxei64_v, 0, 4, 0, ENC(rs1, vd))           \
+        _(vloxseg2e8_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vloxseg3e8_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vloxseg4e8_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vloxseg5e8_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vloxseg6e8_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vloxseg7e8_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vloxseg8e8_v, 0, 4, 0, ENC(rs1, vd))         \
+        _(vloxseg2e16_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg3e16_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg4e16_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg5e16_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg6e16_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg7e16_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg8e16_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg2e32_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg3e32_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg4e32_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg5e32_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg6e32_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg7e32_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg8e32_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg2e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg3e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg4e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg5e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg6e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg7e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg8e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        /* Integer Arithmetic instructions */          \
+        _(vadd_vv, 0, 4, 1, ENC(rs1, rs2, vd))         \
+        _(vadd_vx, 0, 4, 1, ENC(rs1, rs2, vd))         \
+        _(vadd_vi, 0, 4, 1, ENC(rs2, rd))              \
+        _(vsub_vv, 0, 4, 1, ENC(rs1, rs2, vd))         \
+        _(vsub_vx, 0, 4, 1, ENC(rs1, rs2, vd))         \
+        _(vrsub_vx, 0, 4, 1, ENC(rs1, rs2, vd))        \
+        _(vrsub_vi, 0, 4, 1, ENC(rs2, rd))             \
+        _(vminu_vv, 0, 4, 1, ENC(rs1, rs2, vd))        \
+        _(vminu_vx, 0, 4, 1, ENC(rs1, rs2, vd))        \
+        _(vmin_vv, 0, 4, 1, ENC(rs1, rs2, vd))         \
+        _(vmin_vx, 0, 4, 1, ENC(rs1, rs2, vd))         \
+        _(vmaxu_vv, 0, 4, 1, ENC(rs1, rs2, vd))        \
+        _(vmaxu_vx, 0, 4, 1, ENC(rs1, rs2, vd))        \
+        _(vmax_vv, 0, 4, 1, ENC(rs1, rs2, vd))         \
+        _(vmax_vx, 0, 4, 1, ENC(rs1, rs2, vd))         \
+        _(vand_vv, 0, 4, 1, ENC(rs1, rs2, vd))         \
+        _(vand_vx, 0, 4, 1, ENC(rs1, rs2, vd))         \
+        _(vand_vi, 0, 4, 1, ENC(rs2, rd))              \
+        _(vor_vv, 0, 4, 1, ENC(rs1, rs2, rd))          \
+        _(vor_vx, 0, 4, 1, ENC(rs1, rs2, rd))          \
+        _(vor_vi, 0, 4, 1, ENC(rs2, rd))               \
+        _(vxor_vv, 0, 4, 1, ENC(rs1, rs2, rd))         \
+        _(vxor_vx, 0, 4, 1, ENC(rs1, rs2, rd))         \
+        _(vxor_vi, 0, 4, 1, ENC(rs2, rd))              \
+        _(vgather_vv, 0, 4, 1, ENC(rs1, rs2, rd))      \
+        _(vgather_vx, 0, 4, 1, ENC(rs1, rs2, rd))      \
+        _(vgather_vi, 0, 4, 1, ENC(rs2, rd))           \
+        _(vslideup_vx, 0, 4, 1, ENC(rs1, rs2, rd))     \
+        _(vslideup_vi, 0, 4, 1, ENC(rs1, rs2, rd))     \
+        _(vslidedown_vx, 0, 4, 1, ENC(rs2, rd))        \
+        _(vslidedown_vi, 0, 4, 1, ENC(rs2, rd))        \
+        _(vmv_vv, 0, 4, 1, ENC(rs1, rs2, rd))          \
+        _(vmv_vx, 0, 4, 1, ENC(rs1, rs2, rd))          \
+        _(vmv_vi, 0, 4, 1, ENC(rs2, rd))               \
     )
+
 /* clang-format on */
 
 /* Macro operation fusion */
@@ -260,6 +481,12 @@ enum {
 #undef _
 };
 /* clang-format on */
+
+static const char *rv_insn_names[] = {
+#define _(inst, can_branch, insn_len, translatable, reg_mask) #inst,
+    RV_INSN_LIST
+#undef _
+};
 
 /* clang-format off */
 /* instruction decode masks */
@@ -314,7 +541,16 @@ enum {
     FCSS_IMM     = 0b00000000000000000001111110000000,
     //               ....xxxx....xxxx....xxxx....xxxx
     FCJ_IMM      = 0b00000000000000000001111111111100,
-    //               ....xxxx....xxxx....xxxx....xxxx
+    //               ....xxxx....xxxx....xxxx....xxxx,
+    FV_ZIMM_30_20 = 0b01111111111100000000000000000000,
+    FV_ZIMM_29_20 = 0b00111111111100000000000000000000,
+    FV_VM        = 0b00000010000000000000000000000000,
+    FV_MOP       = 0b00001100000000000000000000000000,
+    FV_MEW       = 0b00010000000000000000000000000000,
+    FV_NF        = 0b11100000000000000000000000000000,
+    FV_14_12     = 0b00000000000000000111000000000000,
+    FV_24_20     = 0b00000001111100000000000000000000,
+    FV_FUNC6     = 0b11111100000000000000000000000000
 };
 /* clang-format on */
 
@@ -342,10 +578,18 @@ typedef struct rv_insn {
     };
     uint8_t rd, rs1, rs2;
     /* store IR list */
-    uint8_t opcode;
+    uint16_t opcode;
 
 #if RV32_HAS(EXT_C)
     uint8_t shamt;
+#endif
+
+#if RV32_HAS(EXT_V)
+    int32_t zimm;
+    uint8_t uimm;
+
+    uint8_t vd, vs1, vs2;
+    uint8_t vm;
 #endif
 
 #if RV32_HAS(EXT_F)

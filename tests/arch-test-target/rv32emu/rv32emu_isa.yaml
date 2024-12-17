@@ -1,8 +1,8 @@
 hart0:
-  ISA: RV32IMCZicsr_Zifencei
+  ISA: RV32I
   User_Spec_Version: '2.3'
   misa:
-    reset-val: 1073746180
+    reset-val: 1073742080
     rv32:
       accessible: true
       extensions:

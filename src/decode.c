@@ -108,16 +108,6 @@ static inline int32_t decode_stype_imm(const uint32_t insn)
     return ((int32_t) dst) >> 20;
 }
 
-#if RV32_HAS(EXT_F)
-/* decode R4-type rs3 field
- * rs3 = inst[31:27]
- */
-static inline uint32_t decode_r4type_rs3(const uint32_t insn)
-{
-    return (insn & FR4_RS3) >> 27;
-}
-#endif
-
 #if RV32_HAS(EXT_C)
 enum {
     /* clang-format off */
@@ -370,7 +360,35 @@ static inline void decode_jtype(rv_insn_t *ir, const uint32_t insn)
     ir->rd = decode_rd(insn);
 }
 
+
+/* STORE-FP: S-type
+ *  31       25 24   20 19   15 14   12 11       7 6      0
+ * | imm[11:5] |  rs2  |  rs1  | width | imm[4:0] | opcode |
+ */
+static inline bool op_store_fp(rv_insn_t *ir, const uint32_t insn)
+{
+    /* inst imm[11:5] rs2 rs1 width imm[4:0] opcode
+     * ----+---------+---+---+-----+--------+-------
+     * FSW  imm[11:5] rs2 rs1 010   imm[4:0] 0100111
+     */
+
+    /* decode S-type */
+    decode_stype(ir, insn);
+
+    ir->opcode = rv_insn_fsw;
+    return true;
+}
+
 #if RV32_HAS(EXT_F)
+
+/* decode R4-type rs3 field
+ * rs3 = inst[31:27]
+ */
+static inline uint32_t decode_r4type_rs3(const uint32_t insn)
+{
+    return (insn & FR4_RS3) >> 27;
+}
+
 /* decode R4-type
  *  31   27 26    25 24   20 19   15 14    12 11   7 6      0
  * |  rs3  | funct2 |  rs2  |  rs1  | funct3 |  rd  | opcode |
@@ -1193,41 +1211,7 @@ static inline bool op_amo(rv_insn_t *ir, const uint32_t insn)
 #endif /* RV32_HAS(EXT_A) */
 
 #if RV32_HAS(EXT_F)
-/* LOAD-FP: I-type
- *  31       20 19   15 14   12 11   7 6      0
- * | imm[11:0] |  rs1  | width |  rd  | opcode |
- */
-static inline bool op_load_fp(rv_insn_t *ir, const uint32_t insn)
-{
-    /* inst imm[11:0] rs1 width rd opcode
-     * ----+---------+---+-----+--+-------
-     * FLW  imm[11:0] rs1 010   rd 0000111
-     */
 
-    /* decode I-type */
-    decode_itype(ir, insn);
-
-    ir->opcode = rv_insn_flw;
-    return true;
-}
-
-/* STORE-FP: S-type
- *  31       25 24   20 19   15 14   12 11       7 6      0
- * | imm[11:5] |  rs2  |  rs1  | width | imm[4:0] | opcode |
- */
-static inline bool op_store_fp(rv_insn_t *ir, const uint32_t insn)
-{
-    /* inst imm[11:5] rs2 rs1 width imm[4:0] opcode
-     * ----+---------+---+---+-----+--------+-------
-     * FSW  imm[11:5] rs2 rs1 010   imm[4:0] 0100111
-     */
-
-    /* decode S-type */
-    decode_stype(ir, insn);
-
-    ir->opcode = rv_insn_fsw;
-    return true;
-}
 
 /* OP-FP: R-type
  *  31    27 26   25 24   20 19   15 14    12 11   7 6      0
@@ -1971,6 +1955,326 @@ static inline bool op_cfsw(rv_insn_t *ir, const uint32_t insn)
 #define op_cflwsp OP_UNIMP
 #endif /* RV32_HAS(EXT_C) && RV32_HAS(EXT_F) */
 
+
+#if RV32_HAS(EXT_V) /* (RV32_HAS(EXT_V) */
+
+/* decode vsetvli zimm[10:0] field
+ * zimm = inst[30:20]
+ */
+static inline int32_t decode_vsetvli_zimm(const uint32_t insn)
+{
+    return (insn & FV_ZIMM_30_20) >> 20;
+}
+/* decode vsetivli zimm[9:0] field
+ * zimm = inst[29:20]
+ */
+static inline int32_t decode_vsetivli_zimm(const uint32_t insn)
+{
+    return (insn & FV_ZIMM_29_20) >> 20;
+}
+
+static inline int32_t decode_31(const uint32_t insn)
+{
+    return (insn & 0x40000000) >> 30;
+}
+
+static inline int32_t decode_vm(const uint32_t insn)
+{
+    return (insn & FV_VM) >> 25;
+}
+
+static inline int32_t decode_mop(const uint32_t insn)
+{
+    return (insn & FV_MOP) >> 26;
+}
+
+static inline int32_t decode_mew(const uint32_t insn)
+{
+    return (insn & FV_MEW) >> 28;
+}
+
+static inline int32_t decode_eew(const uint32_t insn)
+{
+    switch ((insn & FV_14_12) >> 12) {
+    case 0b000:
+        return 0;
+    case 0b101:
+        return 1;
+    case 0b110:
+        return 2;
+    case 0b111:
+        return 3;
+    default:
+        return -1;
+    }
+}
+
+static inline int32_t decode_nf(const uint32_t insn)
+{
+    return (insn & FV_NF) >> 29;
+}
+
+static inline int32_t decode_24_20(const uint32_t insn)
+{
+    return ((int32_t) (insn & FV_24_20)) >> 20;
+}
+
+static inline int32_t decode_funct6(const uint32_t insn)
+{
+    return ((int32_t) (insn & FV_FUNC6)) >> 26;
+}
+
+/* decode vsetvli
+ *  31 30         20 19   15 14  12 11   7 6      0
+ *   |0| zimm[11:0] |  rs1  | 111  |  rd  | opcode |
+ */
+static inline void decode_vsetvli(rv_insn_t *ir, const uint32_t insn)
+{
+    ir->zimm = decode_vsetvli_zimm(insn);
+    ir->rs1 = decode_rs1(insn);
+    ir->rd = decode_rd(insn);
+}
+/* decode vsetivli
+ *  31 30 29        20 19    15 14  12 11   7 6      0
+ *   |1|1| zimm[11:0] |  rs1   | 111  |  rd  | opcode |
+ */
+static inline void decode_vsetivli(rv_insn_t *ir, const uint32_t insn)
+{
+    ir->zimm = decode_vsetivli_zimm(insn);
+    ir->uimm = decode_rs1(insn);
+    ir->rd = decode_rd(insn);
+}
+/* decode vsetvl
+ *  31 30    25 24  20 19   15 14  12 11   7 6      0
+ *   |1| 000000| rs2  |  rs1  | 111  |  rd  | opcode |
+ */
+static inline void decode_vsetvl(rv_insn_t *ir, const uint32_t insn)
+{
+    ir->rs2 = decode_rs2(insn);
+    ir->rs1 = decode_rs1(insn);
+    ir->rd = decode_rd(insn);
+}
+
+static inline void decode_vvtype(rv_insn_t *ir, const uint32_t insn)
+{
+    ir->vs2 = decode_rs2(insn);
+    ir->vs1 = decode_rs1(insn);
+    ir->vd = decode_rd(insn);
+    ir->vm = decode_vm(insn);
+}
+
+static inline void decode_vitype(rv_insn_t *ir, const uint32_t insn)
+{
+    ir->vs2 = decode_rs2(insn);
+    ir->imm = decode_rs1(insn);
+    ir->vd = decode_rd(insn);
+    ir->vm = decode_vm(insn);
+}
+
+static inline void decode_vxtype(rv_insn_t *ir, const uint32_t insn)
+{
+    ir->vs2 = decode_rs2(insn);
+    ir->rs1 = decode_rs1(insn);
+    ir->vd = decode_rd(insn);
+    ir->vm = decode_vm(insn);
+}
+
+static inline void decode_VL(rv_insn_t *ir, const uint32_t insn)
+{
+    ir->rs1 = decode_rs1(insn);
+    ir->vd = decode_rd(insn);
+    ir->vm = decode_vm(insn);
+}
+
+static inline void decode_VLS(rv_insn_t *ir, const uint32_t insn)
+{
+    ir->rs2 = decode_rs2(insn);
+    ir->rs1 = decode_rs1(insn);
+    ir->vd = decode_rd(insn);
+    ir->vm = decode_vm(insn);
+}
+
+static inline void decode_VLX(rv_insn_t *ir, const uint32_t insn)
+{
+    ir->vs2 = decode_rs2(insn);
+    ir->rs1 = decode_rs1(insn);
+    ir->vd = decode_rd(insn);
+    ir->vm = decode_vm(insn);
+}
+
+static inline bool op_vcfg(rv_insn_t *ir, const uint32_t insn)
+{
+    switch (insn >> 31) {
+    case 0:  // vsetvli
+        decode_vsetvli(ir, insn);
+        ir->opcode = rv_insn_vsetvli;
+        break;
+    case 1:
+        switch (decode_31(insn)) {
+        case 0:  // vsetvl
+            decode_vsetvl(ir, insn);
+            ir->opcode = rv_insn_vsetvl;
+            break;
+        case 1:  // vsetivli
+            decode_vsetivli(ir, insn);
+            ir->opcode = rv_insn_vsetivli;
+            break;
+        default: /* illegal instruction */
+            return false;
+        }
+        break;
+
+    default: /* illegal instruction */
+        return false;
+    }
+    return true;
+}
+
+static inline bool op_000000(rv_insn_t *ir, const uint32_t insn)
+{
+    switch (decode_funct3(insn)) {
+    case 0:
+        decode_vvtype(ir, insn);
+        ir->opcode = rv_insn_vadd_vv;
+        break;
+    case 1: /* Fixme:vfadd.vv */
+    case 2: /* Fixme:vredsum.vv */
+    case 3:
+        decode_vitype(ir, insn);
+        ir->opcode = rv_insn_vadd_vi;
+        break;
+    case 4:
+        decode_vxtype(ir, insn);
+        ir->opcode = rv_insn_vadd_vx;
+        break;
+    case 5:  /* Fixme:vfadd.vf */
+    case 6:  /* Reserved */
+    default: /* illegal instruction */
+        return false;
+    }
+    return true;
+}
+
+static inline bool op_000010(rv_insn_t *ir, const uint32_t insn)
+{
+    switch (decode_funct3(insn)) {
+    case 0:
+        decode_vvtype(ir, insn);
+        ir->opcode = rv_insn_vsub_vv;
+        break;
+    case 1: /* Fixme */
+    case 2: /* Fixme */
+    case 3: /* Reserved */
+    case 4:
+        decode_vxtype(ir, insn);
+        ir->opcode = rv_insn_vsub_vx;
+        break;
+    case 5:  /* Fixme */
+    case 6:  /* Reserved */
+    default: /* illegal instruction */
+        return false;
+    }
+    return true;
+}
+
+#endif /* (RV32_HAS(EXT_V) */
+
+
+/* Fixme:Temproary move op_load/store_fp out of EXT_F */
+/* LOAD-FP: I-type
+ *  31       20 19   15 14   12 11   7 6      0
+ * | imm[11:0] |  rs1  | width |  rd  | opcode |
+ */
+static inline bool op_load_fp(rv_insn_t *ir, const uint32_t insn)
+{
+#if RV32_HAS(EXT_V)
+    /* Fixme: The implementation now is just using switch statement, since there
+     * are multiple duplicate elements in vectore load/store instruction. I'm
+     * hoping to build clean and efficient code. */
+    /* inst nf mew mop vm   rs2/rs1 width vd opcode
+     * ----+---+---+---+--+---------+-----+--+-------
+     * VL*   nf mew mop vm    lumop  width vd 0000111
+     * VLS*  nf mew mop vm    rs2    width vd 0000111
+     * VLX*  nf mew mop vm    vs2    width vd 0000111
+     */
+    if (decode_funct3(insn) != 0b010) {
+        uint8_t eew = decode_eew(insn);
+        uint8_t nf = decode_nf(insn);
+        switch (decode_mop(insn)) {
+        case 0:
+            decode_VL(ir, insn);
+            /* check lumop */
+            switch (decode_24_20(insn)) {
+            case 0b00000:
+                if (!nf) {
+                    ir->opcode = rv_insn_vle8_v + eew;
+                } else {
+                    ir->opcode = rv_insn_vlseg2e8_v + 7 * eew + nf - 1;
+                }
+                break;
+            case 0b01000:
+                ir->opcode = rv_insn_vl1re8_v + 4 * eew + nf - 1;
+                break;
+            case 0b01011:
+                ir->opcode = rv_insn_vlm_v;
+                break;
+            case 0b10000:
+                if (!nf) {
+                    ir->opcode = rv_insn_vle8ff_v + eew;
+                } else {
+                    ir->opcode = rv_insn_vlseg2e8ff_v + 7 * eew + nf - 1;
+                }
+                break;
+            default:
+                return false;
+            }
+            break;
+        case 1:
+            decode_VLX(ir, insn);
+            if (!nf) {
+                ir->opcode = rv_insn_vluxei8_v + eew;
+            } else {
+                ir->opcode = rv_insn_vluxseg2e8_v + 7 * eew + nf - 1;
+            }
+            break;
+        case 2:
+            decode_VLS(ir, insn);
+            if (!nf) {
+                ir->opcode = rv_insn_vlse8_v + eew;
+            } else {
+                ir->opcode = rv_insn_vlsseg2e8_v + 7 * eew + nf - 1;
+            }
+            break;
+        case 3:
+            decode_VLX(ir, insn);
+            if (!nf) {
+                ir->opcode = rv_insn_vloxei8_v + eew;
+            } else {
+                ir->opcode = rv_insn_vloxseg2e8_v + 7 * eew + nf - 1;
+            }
+            break;
+        default:
+            return false;
+        }
+        return true;
+    }
+
+#endif
+
+    /* inst imm[11:0] rs1 width rd opcode
+     * ----+---------+---+-----+--+-------
+     * FLW  imm[11:0] rs1 010   rd 0000111
+     */
+
+    /* decode I-type */
+    decode_itype(ir, insn);
+
+    ir->opcode = rv_insn_flw;
+    return true;
+}
+
+
+
 /* handler for all unimplemented opcodes */
 static inline bool op_unimp(rv_insn_t *ir UNUSED, uint32_t insn UNUSED)
 {
@@ -1994,7 +2298,7 @@ bool rv_decode(rv_insn_t *ir, uint32_t insn)
     //  000         001           010        011           100         101        110        111
         OP(load),   OP(load_fp),  OP(unimp), OP(misc_mem), OP(op_imm), OP(auipc), OP(unimp), OP(unimp), // 00
         OP(store),  OP(store_fp), OP(unimp), OP(amo),      OP(op),     OP(lui),   OP(unimp), OP(unimp), // 01
-        OP(madd),   OP(msub),     OP(nmsub), OP(nmadd),    OP(op_fp),  OP(unimp), OP(unimp), OP(unimp), // 10
+        OP(madd),   OP(msub),     OP(nmsub), OP(nmadd),    OP(op_fp),  OP(vcfg), OP(unimp), OP(unimp),  // 10
         OP(branch), OP(jalr),     OP(unimp), OP(jal),      OP(system), OP(unimp), OP(unimp), OP(unimp), // 11
     };
 
@@ -2011,6 +2315,26 @@ bool rv_decode(rv_insn_t *ir, uint32_t insn)
         OP(csw),       OP(cbeqz),     OP(cswsp),  OP(unimp),  // 110
         OP(cfsw),      OP(cbnez),     OP(cfswsp), OP(unimp),  // 111
     };
+#endif
+
+#if RV32_HAS(EXT_V)
+    /* RVV vector opcode map */
+    static const decode_t rvv_jump_table[] = {
+    /* Acording to https://github.com/riscvarchive/riscv-v-spec/blob/master/inst-table.adoc this table is for function6. */
+    //  000        001        010        011        100        101        110        111
+        OP(000000), OP(unimp), OP(000010), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp),  // 000
+        OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp),  // 001
+        OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp),  // 010
+        OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp),  // 011
+        OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp),  // 100
+        OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp),  // 101
+        OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp),  // 110
+        OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp), OP(unimp)   // 111
+    };
+    // /* RVV vector opcode map */
+    // static const decode_t MOP_table[] = {
+
+    // }
 #endif
     /* clang-format on */
 
@@ -2032,6 +2356,20 @@ bool rv_decode(rv_insn_t *ir, uint32_t insn)
 
     /* standard uncompressed instruction */
     const uint32_t index = (insn & INSN_6_2) >> 2;
+
+#if RV32_HAS(EXT_V)
+    /* Handle vector operations */
+    if (index == 0b10101) {
+        /* Since vcfg and vop uses the same opcode */
+        if (decode_funct3(insn) == 0b111) {
+            const decode_t op = rv_jump_table[index];
+            return op(ir, insn);
+        }
+        const uint32_t v_index = (insn >> 26) & 0x3F;
+        const decode_t op = rvv_jump_table[v_index];
+        return op(ir, insn);
+    }
+#endif
 
     /* decode instruction */
     const decode_t op = rv_jump_table[index];

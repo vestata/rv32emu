@@ -598,6 +598,26 @@ FORCE_INLINE bool insn_is_indirect_branch(uint8_t opcode)
     }
 }
 
+/* Helper function to print a binary representation of a number */
+void print_opcode(const rv_insn_t *ir, const uint32_t insn) {
+    if (ir->pc < 0x101a8 || ir->pc > 0x101f8)
+        return;
+
+    // Print PC and hexadecimal instruction
+    printf("PC: 0x%08x  Insn: 0x%08x  ", ir->pc, insn);
+
+    // Print decoded opcode and fields
+    if (ir->opcode < N_RV_INSNS) {  
+        printf("%-12s ", rv_insn_names[ir->opcode]);
+    } else {
+        printf("Invalid opcode: %u  ", ir->opcode);
+    }
+
+    printf("RS1: %-2u  RS2: %-2u  RD: %-2u  ", ir->rs1, ir->rs2, ir->rd);
+    printf("VS1: %-2u  VS2: %-2u  VD: %-2u  ", ir->vs1, ir->vs2, ir->vd);
+    printf("VM: %u  Imm: %d\n", ir->vm, ir->imm);
+}
+
 static void block_translate(riscv_t *rv, block_t *block)
 {
 retranslate:
@@ -632,7 +652,10 @@ retranslate:
             break;
         }
         ir->impl = dispatch_table[ir->opcode];
-        ir->pc = block->pc_end; /* compute the end of pc */
+        ir->pc = block->pc_end;
+
+        print_opcode(ir, insn);
+        /* compute the end of pc */
         block->pc_end += is_compressed(insn) ? 2 : 4;
         block->n_insn++;
         prev_ir = ir;
