@@ -272,20 +272,20 @@ enum op_field {
         _(vlseg7e64_v, 0, 4, 0, ENC(rs1, vd))          \
         _(vlseg8e64_v, 0, 4, 0, ENC(rs1, vd))          \
         _(vl1re8_v, 0, 4, 0, ENC(rs1, vd))             \
-        _(vl1re16_v, 0, 4, 0, ENC(rs1, vd))            \
-        _(vl1re32_v, 0, 4, 0, ENC(rs1, vd))            \
-        _(vl1re64_v, 0, 4, 0, ENC(rs1, vd))            \
         _(vl2re8_v, 0, 4, 0, ENC(rs1, vd))             \
-        _(vl2re16_v, 0, 4, 0, ENC(rs1, vd))            \
-        _(vl2re32_v, 0, 4, 0, ENC(rs1, vd))            \
-        _(vl2re64_v, 0, 4, 0, ENC(rs1, vd))            \
         _(vl4re8_v, 0, 4, 0, ENC(rs1, vd))             \
-        _(vl4re16_v, 0, 4, 0, ENC(rs1, vd))            \
-        _(vl4re32_v, 0, 4, 0, ENC(rs1, vd))            \
-        _(vl4re64_v, 0, 4, 0, ENC(rs1, vd))            \
         _(vl8re8_v, 0, 4, 0, ENC(rs1, vd))             \
+        _(vl1re16_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl2re16_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl4re16_v, 0, 4, 0, ENC(rs1, vd))            \
         _(vl8re16_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl1re32_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl2re32_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl4re32_v, 0, 4, 0, ENC(rs1, vd))            \
         _(vl8re32_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl1re64_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl2re64_v, 0, 4, 0, ENC(rs1, vd))            \
+        _(vl4re64_v, 0, 4, 0, ENC(rs1, vd))            \
         _(vl8re64_v, 0, 4, 0, ENC(rs1, vd))            \
         _(vlm_v, 0, 4, 0, ENC(rs1, vd))                \
         _(vle8ff_v, 0, 4, 0, ENC(rs1, vd))             \

@@ -5,7 +5,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
-
+#include <math.h>
 #include "decode.h"
 #include "riscv_private.h"
 
@@ -2213,7 +2213,7 @@ static inline bool op_load_fp(rv_insn_t *ir, const uint32_t insn)
                 }
                 break;
             case 0b01000:
-                ir->opcode = rv_insn_vl1re8_v + 4 * eew + nf - 1;
+                ir->opcode = rv_insn_vl1re8_v + 4 * eew + log2(nf + 1);
                 break;
             case 0b01011:
                 ir->opcode = rv_insn_vlm_v;

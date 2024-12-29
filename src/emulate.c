@@ -599,15 +599,17 @@ FORCE_INLINE bool insn_is_indirect_branch(uint8_t opcode)
 }
 
 /* Helper function to print a binary representation of a number */
-void print_opcode(const rv_insn_t *ir, const uint32_t insn) {
-    if (ir->pc < 0x101a8 || ir->pc > 0x101f8)
+void print_opcode(const rv_insn_t *ir, const uint32_t insn)
+{
+    /* Have to manually input the point counter for the main section for now. */
+    if (ir->pc < 0x101a8 || ir->pc > 0x101fc)
         return;
 
     // Print PC and hexadecimal instruction
     printf("PC: 0x%08x  Insn: 0x%08x  ", ir->pc, insn);
 
     // Print decoded opcode and fields
-    if (ir->opcode < N_RV_INSNS) {  
+    if (ir->opcode < N_RV_INSNS) {
         printf("%-12s ", rv_insn_names[ir->opcode]);
     } else {
         printf("Invalid opcode: %u  ", ir->opcode);
