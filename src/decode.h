@@ -324,34 +324,34 @@ enum op_field {
         _(vluxei16_v, 0, 4, 0, ENC(rs1, vd))           \
         _(vluxei32_v, 0, 4, 0, ENC(rs1, vd))           \
         _(vluxei64_v, 0, 4, 0, ENC(rs1, vd))           \
-        _(vluxseg2e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vluxseg3e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vluxseg4e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vluxseg5e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vluxseg6e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vluxseg7e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vluxseg8e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vluxseg2e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg3e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg4e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg5e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg6e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg7e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg8e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg2e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg3e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg4e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg5e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg6e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg7e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg8e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg2e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg3e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg4e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg5e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg6e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg7e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vluxseg8e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg2ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg3ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg4ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg5ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg6ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg7ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg8ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vluxseg2ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg3ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg4ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg5ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg6ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg7ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg8ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg2ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg3ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg4ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg5ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg6ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg7ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg8ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg2ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg3ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg4ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg5ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg6ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg7ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vluxseg8ei64_v, 0, 4, 0, ENC(rs1, vd))       \
         _(vlse8_v, 0, 4, 0, ENC(rs1, vd))              \
         _(vlse16_v, 0, 4, 0, ENC(rs1, vd))             \
         _(vlse32_v, 0, 4, 0, ENC(rs1, vd))             \
@@ -388,34 +388,34 @@ enum op_field {
         _(vloxei16_v, 0, 4, 0, ENC(rs1, vd))           \
         _(vloxei32_v, 0, 4, 0, ENC(rs1, vd))           \
         _(vloxei64_v, 0, 4, 0, ENC(rs1, vd))           \
-        _(vloxseg2e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vloxseg3e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vloxseg4e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vloxseg5e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vloxseg6e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vloxseg7e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vloxseg8e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vloxseg2e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg3e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg4e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg5e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg6e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg7e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg8e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg2e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg3e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg4e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg5e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg6e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg7e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg8e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg2e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg3e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg4e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg5e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg6e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg7e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vloxseg8e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg2ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg3ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg4ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg5ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg6ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg7ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg8ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vloxseg2ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg3ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg4ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg5ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg6ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg7ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg8ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg2ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg3ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg4ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg5ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg6ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg7ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg8ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg2ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg3ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg4ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg5ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg6ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg7ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vloxseg8ei64_v, 0, 4, 0, ENC(rs1, vd))       \
         /* Vectore store */                            \
         _(vse8_v, 0, 4, 0, ENC(rs1, vd))               \
         _(vse16_v, 0, 4, 0, ENC(rs1, vd))              \
@@ -458,34 +458,34 @@ enum op_field {
         _(vsuxei16_v, 0, 4, 0, ENC(rs1, vd))           \
         _(vsuxei32_v, 0, 4, 0, ENC(rs1, vd))           \
         _(vsuxei64_v, 0, 4, 0, ENC(rs1, vd))           \
-        _(vsuxseg2e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vsuxseg3e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vsuxseg4e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vsuxseg5e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vsuxseg6e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vsuxseg7e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vsuxseg8e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vsuxseg2e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg3e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg4e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg5e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg6e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg7e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg8e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg2e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg3e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg4e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg5e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg6e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg7e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg8e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg2e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg3e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg4e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg5e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg6e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg7e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsuxseg8e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg2ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg3ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg4ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg5ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg6ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg7ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg8ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg2ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg3ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg4ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg5ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg6ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg7ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg8ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg2ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg3ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg4ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg5ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg6ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg7ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg8ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg2ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg3ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg4ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg5ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg6ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg7ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg8ei64_v, 0, 4, 0, ENC(rs1, vd))       \
         _(vsse8_v, 0, 4, 0, ENC(rs1, vd))              \
         _(vsse16_v, 0, 4, 0, ENC(rs1, vd))             \
         _(vsse32_v, 0, 4, 0, ENC(rs1, vd))             \
@@ -522,34 +522,34 @@ enum op_field {
         _(vsoxei16_v, 0, 4, 0, ENC(rs1, vd))           \
         _(vsoxei32_v, 0, 4, 0, ENC(rs1, vd))           \
         _(vsoxei64_v, 0, 4, 0, ENC(rs1, vd))           \
-        _(vsoxseg2e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vsoxseg3e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vsoxseg4e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vsoxseg5e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vsoxseg6e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vsoxseg7e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vsoxseg8e8_v, 0, 4, 0, ENC(rs1, vd))         \
-        _(vsoxseg2e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg3e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg4e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg5e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg6e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg7e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg8e16_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg2e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg3e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg4e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg5e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg6e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg7e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg8e32_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg2e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg3e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg4e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg5e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg6e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg7e64_v, 0, 4, 0, ENC(rs1, vd))        \
-        _(vsoxseg8e64_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg2ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg3ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg4ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg5ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg6ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg7ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg8ei8_v, 0, 4, 0, ENC(rs1, vd))        \
+        _(vsuxseg2ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg3ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg4ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg5ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg6ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg7ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg8ei16_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg2ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg3ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg4ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg5ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg6ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg7ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg8ei32_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg2ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg3ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg4ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg5ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg6ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg7ei64_v, 0, 4, 0, ENC(rs1, vd))       \
+        _(vsuxseg8ei64_v, 0, 4, 0, ENC(rs1, vd))       \
         /* Integer Arithmetic instructions */          \
         _(vadd_vv, 0, 4, 1, ENC(rs1, rs2, vd))         \
         _(vadd_vx, 0, 4, 1, ENC(rs1, rs2, vd))         \
