@@ -361,24 +361,6 @@ static inline void decode_jtype(rv_insn_t *ir, const uint32_t insn)
 }
 
 
-/* STORE-FP: S-type
- *  31       25 24   20 19   15 14   12 11       7 6      0
- * | imm[11:5] |  rs2  |  rs1  | width | imm[4:0] | opcode |
- */
-static inline bool op_store_fp(rv_insn_t *ir, const uint32_t insn)
-{
-    /* inst imm[11:5] rs2 rs1 width imm[4:0] opcode
-     * ----+---------+---+---+-----+--------+-------
-     * FSW  imm[11:5] rs2 rs1 010   imm[4:0] 0100111
-     */
-
-    /* decode S-type */
-    decode_stype(ir, insn);
-
-    ir->opcode = rv_insn_fsw;
-    return true;
-}
-
 #if RV32_HAS(EXT_F)
 
 /* decode R4-type rs3 field
@@ -2102,6 +2084,29 @@ static inline void decode_VLX(rv_insn_t *ir, const uint32_t insn)
     ir->vm = decode_vm(insn);
 }
 
+static inline void decode_VS(rv_insn_t *ir, const uint32_t insn)
+{
+    ir->rs1 = decode_rs1(insn);
+    ir->vs3 = decode_rd(insn);
+    ir->vm = decode_vm(insn);
+}
+
+static inline void decode_VSS(rv_insn_t *ir, const uint32_t insn)
+{
+    ir->rs2 = decode_rs2(insn);
+    ir->rs1 = decode_rs1(insn);
+    ir->vs3 = decode_rd(insn);
+    ir->vm = decode_vm(insn);
+}
+
+static inline void decode_VSX(rv_insn_t *ir, const uint32_t insn)
+{
+    ir->vs2 = decode_rs2(insn);
+    ir->rs1 = decode_rs1(insn);
+    ir->vs3 = decode_rd(insn);
+    ir->vm = decode_vm(insn);
+}
+
 static inline bool op_vcfg(rv_insn_t *ir, const uint32_t insn)
 {
     switch (insn >> 31) {
@@ -2191,11 +2196,11 @@ static inline bool op_load_fp(rv_insn_t *ir, const uint32_t insn)
     /* Fixme: The implementation now is just using switch statement, since there
      * are multiple duplicate elements in vectore load/store instruction. I'm
      * hoping to build clean and efficient code. */
-    /* inst nf mew mop vm   rs2/rs1 width vd opcode
-     * ----+---+---+---+--+---------+-----+--+-------
-     * VL*   nf mew mop vm    lumop  width vd 0000111
-     * VLS*  nf mew mop vm    rs2    width vd 0000111
-     * VLX*  nf mew mop vm    vs2    width vd 0000111
+    /* inst nf mew mop vm   rs2/vs1  rs1   width vd  opcode
+     * ----+---+---+---+--+---------+-----+-----+---+--------
+     * VL*   nf mew mop vm    lumop  rs1   width vd  0000111
+     * VLS*  nf mew mop vm    rs2    rs1   width vd  0000111
+     * VLX*  nf mew mop vm    vs2    rs1   width vd  0000111
      */
     if (decode_funct3(insn) != 0b010) {
         uint8_t eew = decode_eew(insn);
@@ -2273,6 +2278,90 @@ static inline bool op_load_fp(rv_insn_t *ir, const uint32_t insn)
     return true;
 }
 
+
+/* STORE-FP: S-type
+ *  31       25 24   20 19   15 14   12 11       7 6      0
+ * | imm[11:5] |  rs2  |  rs1  | width | imm[4:0] | opcode |
+ */
+static inline bool op_store_fp(rv_insn_t *ir, const uint32_t insn)
+{
+#if RV32_HAS(EXT_V)
+    /* Fixme: The implementation now is just using switch statement, since there
+     * are multiple duplicate elements in vectore load/store instruction. I'm
+     * hoping to build clean and efficient code. */
+    /* inst nf mew mop vm   rs2/vs1  rs1   width vs3  opcode
+     * ----+---+---+---+--+---------+-----+-----+---+--------
+     * VS*   nf mew mop vm    sumop  rs1   width vs3  0100111
+     * VSS*  nf mew mop vm    rs2    rs1   width vs3  0100111
+     * VSX*  nf mew mop vm    vs2    rs1   width vs3  0100111
+     */
+    if (decode_funct3(insn) != 0b010) {
+        uint8_t eew = decode_eew(insn);
+        uint8_t nf = decode_nf(insn);
+        switch (decode_mop(insn)) {
+        case 0:
+            decode_VS(ir, insn);
+            /* check sumop */
+            switch (decode_24_20(insn)) {
+            case 0b00000:
+                if (!nf) {
+                    ir->opcode = rv_insn_vse8_v + eew;
+                } else {
+                    ir->opcode = rv_insn_vsseg2e8_v + 7 * eew + nf - 1;
+                }
+                break;
+            case 0b01000:
+                ir->opcode = rv_insn_vs1r_v + log2(nf + 1);
+                break;
+            case 0b01011:
+                ir->opcode = rv_insn_vsm_v;
+                break;
+            default:
+                return false;
+            }
+            break;
+        case 1:
+            decode_VSX(ir, insn);
+            if (!nf) {
+                ir->opcode = rv_insn_vsuxei8_v + eew;
+            } else {
+                ir->opcode = rv_insn_vsuxseg2e8_v + 7 * eew + nf - 1;
+            }
+            break;
+        case 2:
+            decode_VSS(ir, insn);
+            if (!nf) {
+                ir->opcode = rv_insn_vsse8_v + eew;
+            } else {
+                ir->opcode = rv_insn_vssseg2e8_v + 7 * eew + nf - 1;
+            }
+            break;
+        case 3:
+            decode_VSX(ir, insn);
+            if (!nf) {
+                ir->opcode = rv_insn_vsoxei8_v + eew;
+            } else {
+                ir->opcode = rv_insn_vsoxseg2e8_v + 7 * eew + nf - 1;
+            }
+            break;
+        default:
+            return false;
+        }
+        return true;
+    }
+
+#endif
+    /* inst imm[11:5] rs2 rs1 width imm[4:0] opcode
+     * ----+---------+---+---+-----+--------+-------
+     * FSW  imm[11:5] rs2 rs1 010   imm[4:0] 0100111
+     */
+
+    /* decode S-type */
+    decode_stype(ir, insn);
+
+    ir->opcode = rv_insn_fsw;
+    return true;
+}
 
 
 /* handler for all unimplemented opcodes */
