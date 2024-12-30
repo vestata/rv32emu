@@ -551,40 +551,272 @@ enum op_field {
         _(vsoxseg7ei64_v, 0, 4, 0, ENC(rs1, vd))       \
         _(vsoxseg8ei64_v, 0, 4, 0, ENC(rs1, vd))       \
         /* Integer Arithmetic instructions */          \
-        _(vadd_vv, 0, 4, 1, ENC(rs1, rs2, vd))         \
-        _(vadd_vx, 0, 4, 1, ENC(rs1, rs2, vd))         \
-        _(vadd_vi, 0, 4, 1, ENC(rs2, rd))              \
-        _(vsub_vv, 0, 4, 1, ENC(rs1, rs2, vd))         \
-        _(vsub_vx, 0, 4, 1, ENC(rs1, rs2, vd))         \
-        _(vrsub_vx, 0, 4, 1, ENC(rs1, rs2, vd))        \
-        _(vrsub_vi, 0, 4, 1, ENC(rs2, rd))             \
-        _(vminu_vv, 0, 4, 1, ENC(rs1, rs2, vd))        \
-        _(vminu_vx, 0, 4, 1, ENC(rs1, rs2, vd))        \
-        _(vmin_vv, 0, 4, 1, ENC(rs1, rs2, vd))         \
-        _(vmin_vx, 0, 4, 1, ENC(rs1, rs2, vd))         \
-        _(vmaxu_vv, 0, 4, 1, ENC(rs1, rs2, vd))        \
-        _(vmaxu_vx, 0, 4, 1, ENC(rs1, rs2, vd))        \
-        _(vmax_vv, 0, 4, 1, ENC(rs1, rs2, vd))         \
-        _(vmax_vx, 0, 4, 1, ENC(rs1, rs2, vd))         \
-        _(vand_vv, 0, 4, 1, ENC(rs1, rs2, vd))         \
-        _(vand_vx, 0, 4, 1, ENC(rs1, rs2, vd))         \
-        _(vand_vi, 0, 4, 1, ENC(rs2, rd))              \
-        _(vor_vv, 0, 4, 1, ENC(rs1, rs2, rd))          \
-        _(vor_vx, 0, 4, 1, ENC(rs1, rs2, rd))          \
-        _(vor_vi, 0, 4, 1, ENC(rs2, rd))               \
-        _(vxor_vv, 0, 4, 1, ENC(rs1, rs2, rd))         \
-        _(vxor_vx, 0, 4, 1, ENC(rs1, rs2, rd))         \
-        _(vxor_vi, 0, 4, 1, ENC(rs2, rd))              \
-        _(vgather_vv, 0, 4, 1, ENC(rs1, rs2, rd))      \
-        _(vgather_vx, 0, 4, 1, ENC(rs1, rs2, rd))      \
-        _(vgather_vi, 0, 4, 1, ENC(rs2, rd))           \
-        _(vslideup_vx, 0, 4, 1, ENC(rs1, rs2, rd))     \
-        _(vslideup_vi, 0, 4, 1, ENC(rs1, rs2, rd))     \
-        _(vslidedown_vx, 0, 4, 1, ENC(rs2, rd))        \
-        _(vslidedown_vi, 0, 4, 1, ENC(rs2, rd))        \
-        _(vmv_vv, 0, 4, 1, ENC(rs1, rs2, rd))          \
-        _(vmv_vx, 0, 4, 1, ENC(rs1, rs2, rd))          \
-        _(vmv_vi, 0, 4, 1, ENC(rs2, rd))               \
+        /* OPI */                                      \
+        _(vadd_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vadd_vx, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vadd_vi, 0, 4, 0, ENC(rs2, rd))              \
+        _(vsub_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vsub_vx, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vrsub_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vrsub_vi, 0, 4, 0, ENC(rs2, rd))             \
+        _(vminu_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vminu_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmin_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vmin_vx, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vmaxu_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmaxu_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmax_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vmax_vx, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vand_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vand_vx, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vand_vi, 0, 4, 0, ENC(rs2, rd))              \
+        _(vor_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vor_vx, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vor_vi, 0, 4, 0, ENC(rs2, rd))               \
+        _(vxor_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vxor_vx, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vxor_vi, 0, 4, 0, ENC(rs2, rd))              \
+        _(vrgather_vv, 0, 4, 0, ENC(rs1, rs2, vd))     \
+        _(vrgather_vx, 0, 4, 0, ENC(rs1, rs2, vd))     \
+        _(vrgather_vi, 0, 4, 0, ENC(rs2, rd))          \
+        _(vslideup_vx, 0, 4, 0, ENC(rs1, rs2, vd))     \
+        _(vslideup_vi, 0, 4, 0, ENC(rs2, rd))          \
+        _(vrgatherei16_vv, 0, 4, 0, ENC(rs1, rs2, vd)) \
+        _(vslidedown_vx, 0, 4, 0, ENC(rs1, rs2, vd))   \
+        _(vslidedown_vi, 0, 4, 0, ENC(rs2, rd))        \
+        _(vadc_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vadc_vx, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vadc_vi, 0, 4, 0, ENC(rs2, rd))              \
+        _(vmadc_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmadc_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmadc_vi, 0, 4, 0, ENC(rs2, rd))             \
+        _(vsbc_vvm, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vsbc_vxm, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vmsbc_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmsbc_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmerge_vvm, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vmerge_vxm, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vmerge_vim, 0, 4, 0, ENC(rs2, rd))            \
+        _(vmv_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vmv_vx, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vmv_vi, 0, 4, 0, ENC(rs2, rd))               \
+        _(vmseq_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmseq_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmseq_vi, 0, 4, 0, ENC(rs2, rd))             \
+        _(vmsne_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmsne_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmsne_vi, 0, 4, 0, ENC(rs2, rd))             \
+        _(vmsltu_vv, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vmsltu_vx, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vmslt_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmslt_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmsleu_vv, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vmsleu_vx, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vmsleu_vi, 0, 4, 0, ENC(rs2, rd))            \
+        _(vmsle_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmsle_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmsle_vi, 0, 4, 0, ENC(rs2, rd))             \
+        _(vmsgtu_vx, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vmsgtu_vi, 0, 4, 0, ENC(rs2, rd))            \
+        _(vmsgt_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vmsgt_vi, 0, 4, 0, ENC(rs2, rd))             \
+        _(vsaddu_vv, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vsaddu_vx, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vsaddu_vi, 0, 4, 0, ENC(rs2, rd))            \
+        _(vsadd_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vsadd_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vsadd_vi, 0, 4, 0, ENC(rs2, rd))             \
+        _(vssubu_vv, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vssubu_vx, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vssub_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vssub_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vsll_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vsll_vx, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vsll_vi, 0, 4, 0, ENC(rs2, rd))              \
+        _(vsmul_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vsmul_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vsrl_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vsrl_vx, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vsrl_vi, 0, 4, 0, ENC(rs2, rd))              \
+        _(vsra_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vsra_vx, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vsra_vi, 0, 4, 0, ENC(rs2, rd))              \
+        _(vssrl_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vssrl_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vssrl_vi, 0, 4, 0, ENC(rs2, rd))             \
+        _(vssra_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vssra_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vssra_vi, 0, 4, 0, ENC(rs2, rd))             \
+        _(vnsrl_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vnsrl_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vnsrl_vi, 0, 4, 0, ENC(rs2, rd))             \
+        _(vnsra_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vnsra_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vnsra_vi, 0, 4, 0, ENC(rs2, rd))             \
+        _(vnclipu_vv, 0, 4, 0, ENC(rs1, rs2, vd))      \
+        _(vnclipu_vx, 0, 4, 0, ENC(rs1, rs2, vd))      \
+        _(vnclipu_vi, 0, 4, 0, ENC(rs2, rd))           \
+        _(vnclip_vv, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vnclip_vx, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vnclip_vi, 0, 4, 0, ENC(rs2, rd))            \
+        _(vwredsumu_vv, 0, 4, 0, ENC(rs1, rs2, vd))    \
+        _(vwredsum_vv, 0, 4, 0, ENC(rs1, rs2, vd))     \
+        /* OPM */                                         \
+        _(vredsum_vs, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vredand_vs, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vredor_vs, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vredxor_vs, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vredminu_vs, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vredmin_vs, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vredmaxu_vs, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vredmax_vs, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vaaddu_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vaaddu_vx, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vaadd_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vaadd_vx, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vasubu_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vasubu_vx, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vasub_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vasub_vx, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vslide1up_vx, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vslide1down_vx, 0, 4, 0, ENC(rs1, rs2, vd))     \
+        _(vcompress_vm, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vmandn_mm, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vmand_mm, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmor_mm, 0, 4, 0, ENC(rs1, rs2, vd))            \
+        _(vmxor_mm, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmorn_mm, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmnand_mm, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vmnor_mm, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmxnor_mm, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vdivu_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vdivu_vx, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vdiv_vv, 0, 4, 0, ENC(rs1, rs2, vd))            \
+        _(vdiv_vx, 0, 4, 0, ENC(rs1, rs2, vd))            \
+        _(vremu_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vremu_vx, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vrem_vv, 0, 4, 0, ENC(rs1, rs2, vd))            \
+        _(vrem_vx, 0, 4, 0, ENC(rs1, rs2, vd))            \
+        _(vmulhu_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vmulhu_vx, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vmul_vv, 0, 4, 0, ENC(rs1, rs2, vd))            \
+        _(vmul_vx, 0, 4, 0, ENC(rs1, rs2, vd))            \
+        _(vmulhsu_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vmulhsu_vx, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vmulh_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmulh_vx, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmadd_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmadd_vx, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vnmsub_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vnmsub_vx, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vmacc_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmacc_vx, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vnmsac_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vnmsac_vx, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vwaddu_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vwaddu_vx, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vwadd_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vwadd_vx, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vwsubu_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vwsubu_vx, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vwsub_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vwsub_vx, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vwaddu_wv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vwaddu_wx, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vwadd_wv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vwadd_wx, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vwsubu_wv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vwsubu_wx, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vwsub_wv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vwsub_wx, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vwmulu_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vwmulu_vx, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vwmulsu_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vwmulsu_vx, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vwmul_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vwmul_vx, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vwmaccu_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vwmaccu_vx, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vwmacc_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vwmacc_vx, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vwmaccus_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vwmaccsu_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vwmaccsu_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        /* OPF */                                         \
+        _(vfadd_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vfadd_vf, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vfredusum_vs, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vfsub_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vfsub_vf, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vfredosum_vs, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vfmin_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vfmin_vf, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vfredmin_vs, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vfmax_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vfmax_vf, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vfredmax_vs, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vfsgnj_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfsgnj_vf, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfsgnjn_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfsgnjn_vf, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfsgnjx_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfsgnjx_vf, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfslide1up_vf, 0, 4, 0, ENC(rs1, rs2, vd))      \
+        _(vfslide1down_vf, 0, 4, 0, ENC(rs1, rs2, vd))    \
+        _(vfmerge_vfm, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vfmv_v_f, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmfeq_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmfeq_vf, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmfle_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmfle_vf, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmflt_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmflt_vf, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmfne_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmfne_vf, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmfgt_vf, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vmfge_vf, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vfdiv_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vfdiv_vf, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vfrdiv_vf, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfmul_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vfmul_vf, 0, 4, 0, ENC(rs1, rs2, vd))           \
+        _(vfrsub_vf, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfmadd_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfmadd_vf, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfnmadd_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfnmadd_vf, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfmsub_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfmsub_vf, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfnmsub_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfnmsub_vf, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfmacc_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfmacc_vf, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfnmacc_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfnmacc_vf, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfmsac_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfmsac_vf, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfnmsac_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfnmsac_vf, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfwadd_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfwadd_vf, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfwredusum_vs, 0, 4, 0, ENC(rs1, rs2, vd))      \
+        _(vfwsub_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfwsub_vf, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfwredosum_vs, 0, 4, 0, ENC(rs1, rs2, vd))      \
+        _(vfwadd_wv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfwadd_wf, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfwsub_wv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfwsub_wf, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfwmul_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfwmul_vf, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vfwmacc_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfwmacc_vf, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfwnmacc_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vfwnmacc_vf, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vfwmsac_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfwmsac_vf, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vfwnmsac_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vfwnmsac_vf, 0, 4, 0, ENC(rs1, rs2, vd))        \
     )
 
 /* clang-format on */
