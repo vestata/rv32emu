@@ -2239,7 +2239,7 @@ static inline bool op_load_fp(rv_insn_t *ir, const uint32_t insn)
             if (!nf) {
                 ir->opcode = rv_insn_vluxei8_v + eew;
             } else {
-                ir->opcode = rv_insn_vluxseg2e8_v + 7 * eew + nf - 1;
+                ir->opcode = rv_insn_vluxseg2ei8_v + 7 * eew + nf - 1;
             }
             break;
         case 2:
@@ -2255,7 +2255,7 @@ static inline bool op_load_fp(rv_insn_t *ir, const uint32_t insn)
             if (!nf) {
                 ir->opcode = rv_insn_vloxei8_v + eew;
             } else {
-                ir->opcode = rv_insn_vloxseg2e8_v + 7 * eew + nf - 1;
+                ir->opcode = rv_insn_vloxseg2ei8_v + 7 * eew + nf - 1;
             }
             break;
         default:
@@ -2325,7 +2325,7 @@ static inline bool op_store_fp(rv_insn_t *ir, const uint32_t insn)
             if (!nf) {
                 ir->opcode = rv_insn_vsuxei8_v + eew;
             } else {
-                ir->opcode = rv_insn_vsuxseg2e8_v + 7 * eew + nf - 1;
+                ir->opcode = rv_insn_vsuxseg2ei8_v + 7 * eew + nf - 1;
             }
             break;
         case 2:
@@ -2341,7 +2341,7 @@ static inline bool op_store_fp(rv_insn_t *ir, const uint32_t insn)
             if (!nf) {
                 ir->opcode = rv_insn_vsoxei8_v + eew;
             } else {
-                ir->opcode = rv_insn_vsoxseg2e8_v + 7 * eew + nf - 1;
+                ir->opcode = rv_insn_vsoxseg2ei8_v + 7 * eew + nf - 1;
             }
             break;
         default:
