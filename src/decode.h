@@ -584,9 +584,9 @@ enum op_field {
         _(vrgatherei16_vv, 0, 4, 0, ENC(rs1, rs2, vd)) \
         _(vslidedown_vx, 0, 4, 0, ENC(rs1, rs2, vd))   \
         _(vslidedown_vi, 0, 4, 0, ENC(rs2, rd))        \
-        _(vadc_vv, 0, 4, 0, ENC(rs1, rs2, vd))         \
-        _(vadc_vx, 0, 4, 0, ENC(rs1, rs2, vd))         \
-        _(vadc_vi, 0, 4, 0, ENC(rs2, rd))              \
+        _(vadc_vvm, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vadc_vxm, 0, 4, 0, ENC(rs1, rs2, vd))         \
+        _(vadc_vim, 0, 4, 0, ENC(rs2, rd))              \
         _(vmadc_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
         _(vmadc_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
         _(vmadc_vi, 0, 4, 0, ENC(rs2, rd))             \
@@ -597,9 +597,9 @@ enum op_field {
         _(vmerge_vvm, 0, 4, 0, ENC(rs1, rs2, vd))       \
         _(vmerge_vxm, 0, 4, 0, ENC(rs1, rs2, vd))       \
         _(vmerge_vim, 0, 4, 0, ENC(rs2, rd))            \
-        _(vmv_vv, 0, 4, 0, ENC(rs1, rs2, vd))          \
-        _(vmv_vx, 0, 4, 0, ENC(rs1, rs2, vd))          \
-        _(vmv_vi, 0, 4, 0, ENC(rs2, rd))               \
+        _(vmv_v_v, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vmv_v_x, 0, 4, 0, ENC(rs1, rs2, vd))          \
+        _(vmv_v_i, 0, 4, 0, ENC(rs2, rd))               \
         _(vmseq_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
         _(vmseq_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
         _(vmseq_vi, 0, 4, 0, ENC(rs2, rd))             \
@@ -647,20 +647,20 @@ enum op_field {
         _(vssra_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
         _(vssra_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
         _(vssra_vi, 0, 4, 0, ENC(rs2, rd))             \
-        _(vnsrl_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
-        _(vnsrl_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
-        _(vnsrl_vi, 0, 4, 0, ENC(rs2, rd))             \
-        _(vnsra_vv, 0, 4, 0, ENC(rs1, rs2, vd))        \
-        _(vnsra_vx, 0, 4, 0, ENC(rs1, rs2, vd))        \
-        _(vnsra_vi, 0, 4, 0, ENC(rs2, rd))             \
-        _(vnclipu_vv, 0, 4, 0, ENC(rs1, rs2, vd))      \
-        _(vnclipu_vx, 0, 4, 0, ENC(rs1, rs2, vd))      \
-        _(vnclipu_vi, 0, 4, 0, ENC(rs2, rd))           \
-        _(vnclip_vv, 0, 4, 0, ENC(rs1, rs2, vd))       \
-        _(vnclip_vx, 0, 4, 0, ENC(rs1, rs2, vd))       \
-        _(vnclip_vi, 0, 4, 0, ENC(rs2, rd))            \
-        _(vwredsumu_vv, 0, 4, 0, ENC(rs1, rs2, vd))    \
-        _(vwredsum_vv, 0, 4, 0, ENC(rs1, rs2, vd))     \
+        _(vnsrl_wv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vnsrl_wx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vnsrl_wi, 0, 4, 0, ENC(rs2, rd))             \
+        _(vnsra_wv, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vnsra_wx, 0, 4, 0, ENC(rs1, rs2, vd))        \
+        _(vnsra_wi, 0, 4, 0, ENC(rs2, rd))             \
+        _(vnclipu_wv, 0, 4, 0, ENC(rs1, rs2, vd))      \
+        _(vnclipu_wx, 0, 4, 0, ENC(rs1, rs2, vd))      \
+        _(vnclipu_wi, 0, 4, 0, ENC(rs2, rd))           \
+        _(vnclip_wv, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vnclip_wx, 0, 4, 0, ENC(rs1, rs2, vd))       \
+        _(vnclip_wi, 0, 4, 0, ENC(rs2, rd))            \
+        _(vwredsumu_vs, 0, 4, 0, ENC(rs1, rs2, vd))    \
+        _(vwredsum_vs, 0, 4, 0, ENC(rs1, rs2, vd))     \
         /* OPM */                                         \
         _(vredsum_vs, 0, 4, 0, ENC(rs1, rs2, vd))         \
         _(vredand_vs, 0, 4, 0, ENC(rs1, rs2, vd))         \
@@ -847,12 +847,6 @@ enum {
 #undef _
 };
 /* clang-format on */
-
-static const char *rv_insn_names[] = {
-#define _(inst, can_branch, insn_len, translatable, reg_mask) #inst,
-    RV_INSN_LIST
-#undef _
-};
 
 /* clang-format off */
 /* instruction decode masks */

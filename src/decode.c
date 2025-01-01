@@ -2588,7 +2588,8 @@ static inline bool op_010000(rv_insn_t *ir, const uint32_t insn)
     switch (decode_funct3(insn)) {
     case 0:
         decode_vvtype(ir, insn);
-        ir->opcode = rv_insn_vadc_vv;
+        ir->vm = 0;
+        ir->opcode = rv_insn_vadc_vvm;
         break;
     case 1:
         /* VWFUNARY0 */
@@ -2598,11 +2599,11 @@ static inline bool op_010000(rv_insn_t *ir, const uint32_t insn)
         /* Fixme */
     case 3: 
         decode_vitype(ir, insn);
-        ir->opcode = rv_insn_vadc_vi;
+        ir->opcode = rv_insn_vadc_vim;
         break;
     case 4:
         decode_vxtype(ir, insn);
-        ir->opcode = rv_insn_vadc_vx;
+        ir->opcode = rv_insn_vadc_vxm;
         break;
     case 5:  
         /* VRFUNARY0 */
@@ -2708,7 +2709,7 @@ static inline bool op_010111(rv_insn_t *ir, const uint32_t insn)
         decode_vvtype(ir, insn);
         if(decode_vm(insn)){
             ir->vm = 1;
-            ir->opcode = rv_insn_vmv_vv;
+            ir->opcode = rv_insn_vmv_v_v;
         }else{
             ir->vm = 0;
             ir->opcode = rv_insn_vmerge_vvm;
@@ -2723,7 +2724,7 @@ static inline bool op_010111(rv_insn_t *ir, const uint32_t insn)
         decode_vitype(ir, insn);
         if(decode_vm(insn)){
             ir->vm = 1;
-            ir->opcode = rv_insn_vmv_vi;
+            ir->opcode = rv_insn_vmv_v_i;
         }else{
             ir->vm = 0;
             ir->opcode = rv_insn_vmerge_vim;
@@ -2733,20 +2734,20 @@ static inline bool op_010111(rv_insn_t *ir, const uint32_t insn)
         decode_vxtype(ir, insn);
         if(decode_vm(insn)){
             ir->vm = 1;
-            ir->opcode = rv_insn_vmv_vx;
+            ir->opcode = rv_insn_vmv_v_x;
         }else{
             ir->vm = 0;
             ir->opcode = rv_insn_vmerge_vxm;
         }
         break;
     case 5:  
-        decode_vvtype(ir, insn);
+        decode_vxtype(ir, insn);
         if(decode_vm(insn)){
             ir->vm = 1;
             ir->opcode = rv_insn_vfmv_v_f;
         }else{
             ir->vm = 0;
-            ir->opcode = rv_insn_vmerge_vxm;
+            ir->opcode = rv_insn_vfmerge_vfm;
         }
         break;
     case 6:  
@@ -3177,6 +3178,9 @@ static inline bool op_100101(rv_insn_t *ir, const uint32_t insn)
         ir->opcode = rv_insn_vmul_vv;
         break;
     case 3: 
+        decode_vitype(ir, insn);
+        ir->opcode = rv_insn_vsll_vi;
+        break;
     case 4:
         decode_vxtype(ir, insn);
         ir->opcode = rv_insn_vsll_vx;
@@ -3238,7 +3242,7 @@ static inline bool op_100111(rv_insn_t *ir, const uint32_t insn)
         break;
     case 6:  
         decode_vxtype(ir, insn);
-        ir->opcode = rv_insn_vmul_vx;
+        ir->opcode = rv_insn_vmulh_vx;
         break;
     default: /* illegal instruction */
         return false;
@@ -3306,7 +3310,7 @@ static inline bool op_101001(rv_insn_t *ir, const uint32_t insn)
         break;
     case 6:  
         decode_vxtype(ir, insn);
-        ir->opcode = rv_insn_vmadd_vv;
+        ir->opcode = rv_insn_vmadd_vx;
         break;
     default: /* illegal instruction */
         return false;
@@ -3374,7 +3378,7 @@ static inline bool op_101011(rv_insn_t *ir, const uint32_t insn)
         break;
     case 6:  
         decode_vxtype(ir, insn);
-        ir->opcode = rv_insn_vnmsub_vv;
+        ir->opcode = rv_insn_vnmsub_vx;
         break;
     default: /* illegal instruction */
         return false;
@@ -3387,7 +3391,7 @@ static inline bool op_101100(rv_insn_t *ir, const uint32_t insn)
     switch (decode_funct3(insn)) {
     case 0:
         decode_vvtype(ir, insn);
-        ir->opcode = rv_insn_vnsrl_vv;
+        ir->opcode = rv_insn_vnsrl_wv;
         break;
     case 1:
         decode_vvtype(ir, insn);
@@ -3396,11 +3400,11 @@ static inline bool op_101100(rv_insn_t *ir, const uint32_t insn)
     case 2: 
     case 3: 
         decode_vitype(ir, insn);
-        ir->opcode = rv_insn_vnsrl_vi;
+        ir->opcode = rv_insn_vnsrl_wi;
         break;
     case 4:
         decode_vxtype(ir, insn);
-        ir->opcode = rv_insn_vnsrl_vx;
+        ir->opcode = rv_insn_vnsrl_wx;
         break;
     case 5:  
         decode_vxtype(ir, insn);
@@ -3418,7 +3422,7 @@ static inline bool op_101101(rv_insn_t *ir, const uint32_t insn)
     switch (decode_funct3(insn)) {
     case 0:
         decode_vvtype(ir, insn);
-        ir->opcode = rv_insn_vnsra_vv;
+        ir->opcode = rv_insn_vnsra_wv;
         break;
     case 1:
         decode_vvtype(ir, insn);
@@ -3430,11 +3434,11 @@ static inline bool op_101101(rv_insn_t *ir, const uint32_t insn)
         break;
     case 3: 
         decode_vitype(ir, insn);
-        ir->opcode = rv_insn_vnsra_vi;
+        ir->opcode = rv_insn_vnsra_wi;
         break;
     case 4:
         decode_vxtype(ir, insn);
-        ir->opcode = rv_insn_vnsra_vx;
+        ir->opcode = rv_insn_vnsra_wx;
         break;
     case 5:  
         decode_vxtype(ir, insn);
@@ -3442,7 +3446,7 @@ static inline bool op_101101(rv_insn_t *ir, const uint32_t insn)
         break;
     case 6:  
         decode_vxtype(ir, insn);
-        ir->opcode = rv_insn_vmacc_vv;
+        ir->opcode = rv_insn_vmacc_vx;
         break;
     default: /* illegal instruction */
         return false;
@@ -3455,7 +3459,7 @@ static inline bool op_101110(rv_insn_t *ir, const uint32_t insn)
     switch (decode_funct3(insn)) {
     case 0:
         decode_vvtype(ir, insn);
-        ir->opcode = rv_insn_vnclipu_vv;
+        ir->opcode = rv_insn_vnclipu_wv;
         break;
     case 1:
         decode_vvtype(ir, insn);
@@ -3464,11 +3468,11 @@ static inline bool op_101110(rv_insn_t *ir, const uint32_t insn)
     case 2: 
     case 3: 
         decode_vitype(ir, insn);
-        ir->opcode = rv_insn_vnclipu_vi;
+        ir->opcode = rv_insn_vnclipu_wi;
         break;
     case 4:
         decode_vxtype(ir, insn);
-        ir->opcode = rv_insn_vnclipu_vx;
+        ir->opcode = rv_insn_vnclipu_wx;
         break;
     case 5:  
         decode_vxtype(ir, insn);
@@ -3486,7 +3490,7 @@ static inline bool op_101111(rv_insn_t *ir, const uint32_t insn)
     switch (decode_funct3(insn)) {
     case 0:
         decode_vvtype(ir, insn);
-        ir->opcode = rv_insn_vnclip_vv;
+        ir->opcode = rv_insn_vnclip_wv;
         break;
     case 1:
         decode_vvtype(ir, insn);
@@ -3498,11 +3502,11 @@ static inline bool op_101111(rv_insn_t *ir, const uint32_t insn)
         break;
     case 3: 
         decode_vitype(ir, insn);
-        ir->opcode = rv_insn_vnclip_vi;
+        ir->opcode = rv_insn_vnclip_wi;
         break;
     case 4:
         decode_vxtype(ir, insn);
-        ir->opcode = rv_insn_vnclip_vx;
+        ir->opcode = rv_insn_vnclip_wx;
         break;
     case 5:  
         decode_vxtype(ir, insn);
@@ -3510,7 +3514,7 @@ static inline bool op_101111(rv_insn_t *ir, const uint32_t insn)
         break;
     case 6:  
         decode_vxtype(ir, insn);
-        ir->opcode = rv_insn_vnmsac_vv;
+        ir->opcode = rv_insn_vnmsac_vx;
         break;
     default: /* illegal instruction */
         return false;
@@ -3523,7 +3527,7 @@ static inline bool op_110000(rv_insn_t *ir, const uint32_t insn)
     switch (decode_funct3(insn)) {
     case 0:
         decode_vvtype(ir, insn);
-        ir->opcode = rv_insn_vwredsumu_vv;
+        ir->opcode = rv_insn_vwredsumu_vs;
         break;
     case 1:
         decode_vvtype(ir, insn);
@@ -3554,7 +3558,7 @@ static inline bool op_110001(rv_insn_t *ir, const uint32_t insn)
     switch (decode_funct3(insn)) {
     case 0:
         decode_vvtype(ir, insn);
-        ir->opcode = rv_insn_vwredsum_vv;
+        ir->opcode = rv_insn_vwredsum_vs;
         break;
     case 1:
         decode_vvtype(ir, insn);
@@ -3569,7 +3573,7 @@ static inline bool op_110001(rv_insn_t *ir, const uint32_t insn)
     case 5:  
     case 6:  
         decode_vxtype(ir, insn);
-        ir->opcode = rv_insn_vwadd_vv;
+        ir->opcode = rv_insn_vwadd_vx;
         break;
     default: /* illegal instruction */
         return false;
@@ -3597,7 +3601,7 @@ static inline bool op_110010(rv_insn_t *ir, const uint32_t insn)
         break;
     case 6:  
         decode_vxtype(ir, insn);
-        ir->opcode = rv_insn_vwsubu_vv;
+        ir->opcode = rv_insn_vwsubu_vx;
         break;
     default: /* illegal instruction */
         return false;
@@ -3622,7 +3626,7 @@ static inline bool op_110011(rv_insn_t *ir, const uint32_t insn)
     case 5:  
     case 6:  
         decode_vxtype(ir, insn);
-        ir->opcode = rv_insn_vwsub_vv;
+        ir->opcode = rv_insn_vwsub_vx;
         break;
     default: /* illegal instruction */
         return false;
