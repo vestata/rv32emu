@@ -2107,6 +2107,13 @@ static inline void decode_VSX(rv_insn_t *ir, const uint32_t insn)
     ir->vm = decode_vm(insn);
 }
 
+static inline void decode_mtype(rv_insn_t *ir, const uint32_t insn)
+{
+    ir->vs2 = decode_rs2(insn);
+    ir->rd = decode_rd(insn);
+    ir->vm = decode_vm(insn);
+}
+
 static inline bool op_vcfg(rv_insn_t *ir, const uint32_t insn)
 {
     switch (insn >> 31) {
@@ -2596,7 +2603,23 @@ static inline bool op_010000(rv_insn_t *ir, const uint32_t insn)
         /* Fixme */
     case 2: 
         /* VWXUNARY0 */
-        /* Fixme */
+        switch(decode_rs1(insn)){
+        case 0:
+            decode_mtype(ir, insn);
+            ir->opcode = rv_insn_vmv_x_s;
+            break;
+        case 0b10000:
+            decode_mtype(ir, insn);
+            ir->opcode = rv_insn_vcpop_m;
+            break;
+        case 0b10001:
+            decode_mtype(ir, insn);
+            ir->opcode = rv_insn_vfirst_m;
+            break;
+        default:
+            return false;
+        }
+        break;
     case 3: 
         decode_vitype(ir, insn);
         ir->opcode = rv_insn_vadc_vim;
@@ -2610,7 +2633,10 @@ static inline bool op_010000(rv_insn_t *ir, const uint32_t insn)
         /* Fixme */
     case 6:  
         /* VRXUNARY0 */
-        /* Fixme */
+        ir->rd = decode_rd(insn);
+        ir->vs2 = decode_rs2(insn);
+        ir->opcode = rv_insn_vmv_s_x;
+        break;
     default: /* illegal instruction */
         return false;
     }
@@ -2696,9 +2722,30 @@ static inline bool op_010011(rv_insn_t *ir, const uint32_t insn)
 static inline bool op_010100(rv_insn_t *ir, const uint32_t insn)
 {
     /* VMUNARY0 */
-    /* Fixme */
-    (void)ir;   // Explicitly mark 'ir' as unused
-    (void)insn; // Explicitly mark 'insn' as unused
+    switch(decode_rs1(insn)){
+        case 0b00001:
+            decode_mtype(ir, insn);
+            ir->opcode = rv_insn_vmsbf_m;
+            break;
+        case 0b00010:
+            decode_mtype(ir, insn);
+            ir->opcode = rv_insn_vmsof_m;
+            break;
+        case 0b00011:
+            decode_mtype(ir, insn);
+            ir->opcode = rv_insn_vmsif_m;
+            break;
+        case 0b10000:
+            decode_mtype(ir, insn);
+            ir->opcode = rv_insn_viota_m;
+            break;
+        case 0b10001:
+            decode_mtype(ir, insn);
+            ir->opcode = rv_insn_vid_m;
+            break;
+        default:
+            return false;
+    }
     return true;
 }
 
