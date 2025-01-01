@@ -750,7 +750,7 @@ enum op_field {
         _(vmsof_m, 0, 4, 0, ENC(rs1, rs2, vd))            \
         _(vmsif_m, 0, 4, 0, ENC(rs1, rs2, vd))            \
         _(viota_m, 0, 4, 0, ENC(rs1, rs2, vd))            \
-        _(vid_m, 0, 4, 0, ENC(rs1, rs2, vd))            \
+        _(vid_v, 0, 4, 0, ENC(rs1, rs2, vd))            \
         /* OPF */                                         \
         _(vfadd_vv, 0, 4, 0, ENC(rs1, rs2, vd))           \
         _(vfadd_vf, 0, 4, 0, ENC(rs1, rs2, vd))           \
@@ -856,6 +856,12 @@ enum {
 #undef _
 };
 /* clang-format on */
+
+static const char *rv_insn_names[] = {
+#define _(inst, can_branch, insn_len, translatable, reg_mask) #inst,
+    RV_INSN_LIST
+#undef _
+};
 
 /* clang-format off */
 /* instruction decode masks */

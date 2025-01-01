@@ -2149,11 +2149,14 @@ static inline bool op_000000(rv_insn_t *ir, const uint32_t insn)
         decode_vvtype(ir, insn);
         ir->opcode = rv_insn_vadd_vv;
         break;
-    case 1: /* Fixme:vfadd.vv */
+    case 1: 
         decode_vvtype(ir, insn);
         ir->opcode = rv_insn_vfadd_vv;
         break;
-    case 2: /* Fixme:vredsum.vv */
+    case 2: 
+        decode_vvtype(ir, insn);
+        ir->opcode = rv_insn_vredsum_vs;
+        break;
     case 3:
         decode_vitype(ir, insn);
         ir->opcode = rv_insn_vadd_vi;
@@ -2633,8 +2636,9 @@ static inline bool op_010000(rv_insn_t *ir, const uint32_t insn)
         /* Fixme */
     case 6:  
         /* VRXUNARY0 */
-        ir->rd = decode_rd(insn);
-        ir->vs2 = decode_rs2(insn);
+        ir->vd = decode_rd(insn);
+        ir->rs1 = decode_rs1(insn);
+        ir->vm = 1;
         ir->opcode = rv_insn_vmv_s_x;
         break;
     default: /* illegal instruction */
@@ -2740,8 +2744,9 @@ static inline bool op_010100(rv_insn_t *ir, const uint32_t insn)
             ir->opcode = rv_insn_viota_m;
             break;
         case 0b10001:
-            decode_mtype(ir, insn);
-            ir->opcode = rv_insn_vid_m;
+            ir->vd = decode_rd(insn);
+            ir->vm = 1;
+            ir->opcode = rv_insn_vid_v;
             break;
         default:
             return false;
@@ -3955,7 +3960,7 @@ static inline bool op_111111(rv_insn_t *ir, const uint32_t insn)
         break;
     case 6:  
         decode_vxtype(ir, insn);
-        ir->opcode = rv_insn_vwmaccus_vx;
+        ir->opcode = rv_insn_vwmaccsu_vx;
         break;
     default: /* illegal instruction */
         return false;

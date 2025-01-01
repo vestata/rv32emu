@@ -372,8 +372,47 @@ quake: artifact $(quake_deps)
 endif
 endif
 
+# Paths
+SRC_EMULATE := src/emulate.c
+PY_GENERATE := generate.py
+PY_UPDATE := update_emulate.py
+PY_COMPARE := compare.py
+
+# Output files
+TEST_TXT := test.txt
+EMU_TXT := test_emu.txt
+
+# Default build target
+all: $(BIN)
+
+# Test target
+test:
+	@for arg in 1 2 3 4 5 6; do \
+		echo "Generating test files with argument $$arg..."; \
+		python3 $(PY_GENERATE) -g $$arg; \
+		riscv32-unknown-elf-gcc -march=rv32gv -mabi=ilp32 -o test.elf test.s; \
+		riscv32-unknown-elf-objdump -d -M numeric,no-aliases test.elf \
+		| sed -n '/<main>:/,/^$$/p' \
+		| sed '/<main>:/d; /^$$/d' \
+		> $(TEST_TXT); \
+		echo "Updating PC range in $(SRC_EMULATE)..."; \
+		python3 $(PY_UPDATE) $(TEST_TXT) $(SRC_EMULATE); \
+		echo "PC range updated."; \
+		echo "Compiling the entire program..."; \
+		$(MAKE) ENABLE_EXT_V=1; \
+		build/rv32emu -q test.elf \
+		| grep -E "PC: 0x[0-9a-f]+  Insn: 0x[0-9a-f]+" \
+		> test_emu.txt; \
+		echo "Comparing test files for argument $$arg..."; \
+		python3 $(PY_COMPARE) -a $$arg; \
+		echo "Comparison complete for argument $$arg."; \
+	done
+	@echo "All comparisons complete."
+
+
 clean:
 	$(RM) $(BIN) $(OBJS) $(DEV_OBJS) $(BUILD_DTB) $(HIST_BIN) $(HIST_OBJS) $(deps) $(WEB_FILES) $(CACHE_OUT) src/rv32_jit.c
+	$(RM) test_emu.txt test.elf test.s test.txt
 distclean: clean
 	-$(RM) $(DOOM_DATA) $(QUAKE_DATA) $(BUILDROOT_DATA) $(LINUX_DATA)
 	$(RM) -r $(OUT)/linux-image

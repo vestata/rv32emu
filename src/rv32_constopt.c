@@ -1756,7 +1756,7 @@ CONSTOPT(vmsbf_m, {})
 CONSTOPT(vmsof_m, {})
 CONSTOPT(vmsif_m, {})
 CONSTOPT(viota_m, {})
-CONSTOPT(vid_m, {})
+CONSTOPT(vid_v, {})
 
 CONSTOPT(vfadd_vv, {})
 CONSTOPT(vfadd_vf, {})

@@ -4131,7 +4131,7 @@ RVOP(
     RVOP(vmsof_m, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
     RVOP(vmsif_m, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
     RVOP(viota_m, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
-    RVOP(vid_m, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
+    RVOP(vid_v, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
 
     RVOP(vfadd_vv, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
     RVOP(vfadd_vf, { for (int i = 0; i < 4; i++) { rv->V[rv_reg_zero][i] = 0; } }, GEN({/* no operation */}))
