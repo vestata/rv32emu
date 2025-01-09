@@ -955,7 +955,6 @@ typedef struct rv_insn {
 
 #if RV32_HAS(EXT_V)
     int32_t zimm;
-    uint8_t uimm;
 
     uint8_t vd, vs1, vs2, vs3;
     uint8_t vm;
