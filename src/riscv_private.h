@@ -218,23 +218,16 @@ struct riscv_internal {
     uint32_t last_csr_sepc;
 #endif
 
-#if RV32_HAS(EXT_V)    
-    vector128_t V[N_RV_REGS];
+#if RV32_HAS(EXT_V)
+    vlen128 V[N_RV_REGS];
 
-    /* Fixme:Temporary way to set configuration for vectors. */
-    bool vma;
-    bool vta;
-    uint8_t vsew;
-    uint8_t vlmul;
-
-    /* ???: Figure out how to control them. */
-    uint32_t csr_vstart;   /* +Vector start position */
-    uint32_t csr_vxsat;    /* +Fixed-Point Saturate Flag */
-    uint32_t csr_vxrm;     /* +Fixed-Point Rounding Mode */
-    uint32_t csr_vcsr;     /* +Vector control and status +register */
-    uint32_t csr_vl;       /* +Vector length */
-    uint32_t csr_vtype;    /* +Vector data type register */
-    uint32_t csr_vlenb;   /* VLEN/8 (vector register length in bytes) */
+    uint32_t csr_vstart; /* +Vector start position */
+    uint32_t csr_vxsat;  /* +Fixed-Point Saturate Flag */
+    uint32_t csr_vxrm;   /* +Fixed-Point Rounding Mode */
+    uint32_t csr_vcsr;   /* +Vector control and status +register */
+    uint32_t csr_vl;     /* +Vector length */
+    uint32_t csr_vtype;  /* +Vector data type register */
+    uint32_t csr_vlenb;  /* VLEN/8 (vector register length in bytes) */
 #endif
 };
 

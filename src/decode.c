@@ -2023,7 +2023,7 @@ static inline void decode_vsetvli(rv_insn_t *ir, const uint32_t insn)
 static inline void decode_vsetivli(rv_insn_t *ir, const uint32_t insn)
 {
     ir->zimm = decode_vsetivli_zimm(insn);
-    ir->uimm = decode_rs1(insn);
+    ir->rs1 = decode_rs1(insn);
     ir->rd = decode_rd(insn);
 }
 /* decode vsetvl
