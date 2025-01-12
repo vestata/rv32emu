@@ -2991,6 +2991,7 @@ RVOP(
 
 #if RV32_HAS(EXT_V)
 #define vlen 128
+#define LEN (vlen) >> (5)
 #define vl_setting(vlmax_, rs1, vl)              \
     if ((rs1) <= vlmax_) {                       \
         (vl) = (rs1);                            \
@@ -3091,27 +3092,134 @@ RVOP(
     GEN({/* no operation */}))
 #undef vl_setting
 
+/*
+ * j sets (v*n + j)
+ * i sets (rv->V[ir->vd][0,1,2,3] for 128 as example)
+ * cnt sets iterator
+ */
 RVOP(
     vle8_v,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
+        uint8_t sew = 8 << ((rv->csr_vtype >> 3) & 0b111);
+        uint32_t addr = rv->X[ir->rs1];
+
+        /* Clear bits */
+        for (int i = 0; i < LEN; i++) {
+            rv->V[ir->vd][i] = 0;
+        }
+        if (ir->eew > sew) {
+            /* Illegal */
+            rv->csr_vtype = 0x80000000;
+            rv->csr_vl = 0;
+            return true;
+        } else {
+            uint8_t i = 0;
+            uint8_t j = 0;
+            /* Handles a word at every loop. */
+            for (uint32_t cnt = 0; rv->csr_vl - cnt >= 4;) {
+                i %= LEN;
+                /* Set illegal when trying to access vector register that is
+                 * larger then 31 */
+                assert(ir->vd + j < 32);
+                rv->V[ir->vd + j][i] |= rv->io.mem_read_b(rv, addr);
+                rv->V[ir->vd + j][i] |= rv->io.mem_read_b(rv, addr + 1) << 8;
+                rv->V[ir->vd + j][i] |= rv->io.mem_read_b(rv, addr + 2) << 16;
+                rv->V[ir->vd + j][i] |= rv->io.mem_read_b(rv, addr + 3) << 24;
+                cnt += 4;
+                i++;
+
+                /* Move to next vector register. */
+                if (!(cnt & ((LEN << 2) - 1))) {
+                    j++;
+                    i = 0;
+                }
+                addr += 4;
+            }
+            /* Handles data that is narrower then a loop. */
+            for (uint32_t cnt = 0; cnt < (rv->csr_vl % 4); cnt++) {
+                assert(ir->vd + j < 32); /* Illegal */
+                rv->V[ir->vd + j][i] |= rv->io.mem_read_b(rv, addr + cnt)
+                                        << (cnt << 3);
+            }
         }
     },
     GEN({/* no operation */}))
 RVOP(
     vle16_v,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
+        uint8_t sew = 8 << ((rv->csr_vtype >> 3) & 0b111);
+        uint32_t addr = rv->X[ir->rs1];
+
+        /* Clear bits */
+        for (int i = 0; i < LEN; i++) {
+            rv->V[ir->vd][i] = 0;
+        }
+        if (ir->eew > sew) {
+            /* Illegal */
+            rv->csr_vtype = 0x80000000;
+            rv->csr_vl = 0;
+            return true;
+        } else {
+            uint8_t i = 0;
+            uint8_t j = 0;
+            for (uint32_t cnt = 0; rv->csr_vl - cnt >= 2;) {
+                i %= LEN;
+                /* Set illegal when trying to access vector register that is
+                 * larger then 31 */
+                assert(ir->vd + j < 32);
+                rv->V[ir->vd + j][i] |= rv->io.mem_read_s(rv, addr);
+                rv->V[ir->vd + j][i] |= rv->io.mem_read_s(rv, addr + 2) << 16;
+                cnt += 2;
+                i++;
+
+                /* Move to next vector register. */
+                if (!(cnt & ((LEN << 1) - 1))) {
+                    j++;
+                    i = 0;
+                }
+                addr += 4;
+            }
+            if (rv->csr_vl % 2) {
+                assert(ir->vd + j < 32); /* Illegal */
+                rv->V[ir->vd + j][i] |= rv->io.mem_read_s(rv, addr);
+            }
         }
     },
     GEN({/* no operation */}))
 RVOP(
     vle32_v,
     {
+        uint8_t sew = 8 << ((rv->csr_vtype >> 3) & 0b111);
+        uint32_t addr = rv->X[ir->rs1];
+
+        /* Clear bits */
         for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
+            rv->V[ir->vd][i] = 0;
+        }
+        if (ir->eew > sew) {
+            /* Illegal */
+            rv->csr_vtype = 0x80000000;
+            rv->csr_vl = 0;
+            return true;
+        } else {
+            uint8_t i = 0;
+            uint8_t j = 0;
+            for (uint32_t cnt = 0; rv->csr_vl > cnt;) {
+                i %= LEN;
+                /* Set illegal when trying to access vector register that is
+                 * larger then 31 */
+                assert(ir->vd + j < 32);
+                rv->V[ir->vd + j][i] |= rv->io.mem_read_w(rv, addr);
+                cnt += 1;
+                i++;
+
+                /* Move to next vector register. */
+                if (!(cnt & ((LEN) -1))) {
+                    j++;
+                    i = 0;
+                }
+                addr += 4;
+            }
         }
     },
     GEN({/* no operation */}))
@@ -4511,24 +4619,109 @@ RVOP(
 RVOP(
     vse8_v,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
+        uint8_t sew = 8 << ((rv->csr_vtype >> 3) & 0b111);
+        uint32_t addr = rv->X[ir->rs1];
+
+        if (ir->eew > sew) {
+            /* Illegal */
+            rv->csr_vtype = 0x80000000;
+            rv->csr_vl = 0;
+            return true;
+        } else {
+            uint8_t i = 0;
+            uint8_t j = 0;
+            /* handle a word per loop */
+            for (uint32_t cnt = 0; rv->csr_vl - cnt >= 4;) {
+                i %= LEN;
+                assert(ir->vs3 + j < 32);
+                uint32_t tmp = rv->V[ir->vs3 + j][i];
+                rv->io.mem_write_b(rv, addr, (tmp) & 0xff);
+                rv->io.mem_write_b(rv, addr + 1, (tmp >> 8) & 0xff);
+                rv->io.mem_write_b(rv, addr + 2, (tmp >> 16) & 0xff);
+                rv->io.mem_write_b(rv, addr + 3, (tmp >> 24) & 0xff);
+                cnt += 4;
+                i++;
+
+                /* Move to next vector register. */
+                if (!(cnt & ((LEN << 2) - 1))) {
+                    j++;
+                    i = 0;
+                }
+                addr += 4;
+            }
+            /* handle a byte per loop */
+            for (uint32_t cnt = 0; cnt < (rv->csr_vl % 4); cnt++) {
+                assert(ir->vs3 + j < 32);
+                uint8_t tmp = (rv->V[ir->vs3 + j][i] >> (cnt << 3)) & 0xff;
+                rv->io.mem_write_b(rv, addr + cnt, tmp);
+            }
         }
     },
     GEN({/* no operation */}))
 RVOP(
     vse16_v,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
+        uint8_t sew = 8 << ((rv->csr_vtype >> 3) & 0b111);
+        uint32_t addr = rv->X[ir->rs1];
+
+        if (ir->eew > sew) {
+            /* Illegal */
+            rv->csr_vtype = 0x80000000;
+            rv->csr_vl = 0;
+            return true;
+        } else {
+            uint8_t i = 0;
+            uint8_t j = 0;
+            /* handle a word per loop */
+            for (uint32_t cnt = 0; rv->csr_vl - cnt >= 2;) {
+                i %= LEN;
+                assert(ir->vs3 + j < 32);
+                uint32_t tmp = rv->V[ir->vs3 + j][i];
+                rv->io.mem_write_s(rv, addr, (tmp) & 0xffff);
+                rv->io.mem_write_s(rv, addr + 2, (tmp >> 16) & 0xffff);
+                cnt += 2;
+                i++;
+
+                if (!(cnt & ((LEN << 1) - 1))) {
+                    j++;
+                    i = 0;
+                }
+                addr += 4;
+            }
+            if (rv->csr_vl % 2) {
+                rv->io.mem_write_s(rv, addr, rv->V[ir->vs3 + j][i] & 0xffff);
+            }
         }
     },
     GEN({/* no operation */}))
 RVOP(
     vse32_v,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
+        uint8_t sew = 8 << ((rv->csr_vtype >> 3) & 0b111);
+        uint32_t addr = rv->X[ir->rs1];
+
+        if (ir->eew > sew) {
+            /* Illegal */
+            rv->csr_vtype = 0x80000000;
+            rv->csr_vl = 0;
+            return true;
+        } else {
+            uint8_t i = 0;
+            uint8_t j = 0;
+            /* handle a word per loop */
+            for (uint32_t cnt = 0; rv->csr_vl > cnt;) {
+                i %= LEN;
+                assert(ir->vs3 + j < 32);
+                rv->io.mem_write_w(rv, addr, rv->V[ir->vs3 + j][i]);
+                cnt += 1;
+                i++;
+
+                if (!(cnt & ((LEN) -1))) {
+                    j++;
+                    i = 0;
+                }
+                addr += 4;
+            }
         }
     },
     GEN({/* no operation */}))
