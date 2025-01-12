@@ -3990,6 +3990,7 @@ static inline bool op_load_fp(rv_insn_t *ir, const uint32_t insn)
      */
     if (decode_funct3(insn) != 0b010) {
         uint8_t eew = decode_eew(insn);
+        ir->eew = 8 << eew;
         uint8_t nf = decode_nf(insn);
         switch (decode_mop(insn)) {
         case 0:
@@ -4083,6 +4084,7 @@ static inline bool op_store_fp(rv_insn_t *ir, const uint32_t insn)
      */
     if (decode_funct3(insn) != 0b010) {
         uint8_t eew = decode_eew(insn);
+        ir->eew = 8 << eew;
         uint8_t nf = decode_nf(insn);
         switch (decode_mop(insn)) {
         case 0:
