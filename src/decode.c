@@ -1940,6 +1940,14 @@ static inline bool op_cfsw(rv_insn_t *ir, const uint32_t insn)
 
 #if RV32_HAS(EXT_V) /* (RV32_HAS(EXT_V) */
 
+/* 
+* Sign extened vector immediate 
+*/
+static inline int32_t decode_v_imm(const uint32_t insn)
+{
+    return ((int32_t)((insn << 12) & FR4_RS3)) >> 27;
+}
+
 /* decode vsetvli zimm[10:0] field
  * zimm = inst[30:20]
  */
@@ -2048,7 +2056,7 @@ static inline void decode_vvtype(rv_insn_t *ir, const uint32_t insn)
 static inline void decode_vitype(rv_insn_t *ir, const uint32_t insn)
 {
     ir->vs2 = decode_rs2(insn);
-    ir->imm = decode_rs1(insn);
+    ir->imm = decode_v_imm(insn);
     ir->vd = decode_rd(insn);
     ir->vm = decode_vm(insn);
 }
