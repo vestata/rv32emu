@@ -2996,7 +2996,6 @@ RVOP(
     if ((rs1) <= vlmax_) {                       \
         (vl) = (rs1);                            \
     } else if ((rs1) < (2 * vlmax_)) {           \
-        /* Fixme:ceil(AVL / 2) <= vl <= VLMAX */ \
         (vl) = vlmax_;                            \
     } else {                                     \
         (vl) = vlmax_;                            \
@@ -3093,146 +3092,241 @@ RVOP(
 #undef vl_setting
 
 /* clang-format off */
-#define OPT(des, op1, op2, op, op_type) {                                  \
-    switch (8 << ((rv->csr_vtype >> 3) & 0b111)) {                         \
-    case 8:                                                                \
-        sew_8b_handler(des, op1, op2, op, op_type);                        \
-        break;                                                             \
-    case 16:                                                               \
-        sew_16b_handler(des, op1, op2, op, op_type);                       \
-        break;                                                             \
-    case 32:                                                               \
-        sew_32b_handler(des, op1, op2, op, op_type);                       \
-        break;                                                             \
-    default:                                                               \
-        break;                                                             \
-    }                                                                      \
+
+#define OPT(des, op1, op2, op, op_type) {                                    \
+    switch (8 << ((rv->csr_vtype >> 3) & 0b111)) {                           \
+    case 8:                                                                  \
+        sew_8b_handler(des, op1, op2, op, op_type);                          \
+        break;                                                               \
+    case 16:                                                                 \
+        sew_16b_handler(des, op1, op2, op, op_type);                         \
+        break;                                                               \
+    case 32:                                                                 \
+        sew_32b_handler(des, op1, op2, op, op_type);                         \
+        break;                                                               \
+    default:                                                                 \
+        break;                                                               \
+    }                                                                        \
 }
 
-#define VI_LOOP(des, op1, op2, op, SHIFT, MASK, i, j, itr)                 \
-    uint32_t tmp_1 = rv->V[op1 + j][i];                                    \
-    rv->V[des + j][i] = 0;                                                 \
-    for (uint8_t ___cnt = 0; ___cnt < itr; ___cnt++) {                     \
-        rv->V[des + j][i] +=                                               \
-            (                                                              \
-                ( (tmp_1 >> (___cnt << (SHIFT))) op (op2) ) & (MASK)       \
-            ) << (___cnt << (SHIFT));                                      \
+#define VMV_LOOP(des, op1, op2, op, SHIFT, MASK, i, j, itr, vm)             \
+    uint32_t ans = 0;                                                       \
+    for (uint8_t ___cnt = 0; ___cnt < itr; ___cnt++) {                      \
+        if (ir->vm) {                                                       \
+            ans = ((op2) & (MASK)) << (___cnt << (SHIFT));                  \
+        } else {                                                            \
+            ans = (rv->V[0][i] & (0x1 << ___cnt)) ?                          \
+                  (((op2)) & (MASK)) << (___cnt << (SHIFT)) : 0;            \
+        }                                                                   \
+        rv->V[des + j][i] += ans;                                           \
     }
 
-#define VI_LOOP_LEFT(des, op1, op2, op, SHIFT, MASK, i, j, itr)            \
-    uint32_t tmp_1 = rv->V[op1 + j][i];                                    \
-    for (uint8_t __cnt = 0; __cnt < (rv->csr_vl % 4); __cnt++) {           \
-        assert((des + j) < 32);                                            \
-        rv->V[des + j][i] +=                                               \
-            (                                                              \
-                ( (tmp_1 >> (__cnt << (SHIFT))) op (op2) ) & (MASK)        \
-            ) << (__cnt << (SHIFT));                                       \
+#define VMV_LOOP_LEFT(des, op1, op2, op, SHIFT, MASK, i, j, itr, vm)        \
+    uint32_t ans = 0;                                                       \
+    for (uint8_t __cnt = 0; __cnt < (rv->csr_vl % 4); __cnt++) {            \
+        assert((des + j) < 32);                                             \
+        if (ir->vm) {                                                       \
+            ans = ((op2) & (MASK)) << (__cnt << (SHIFT));                   \
+        } else {                                                            \
+            ans = (rv->V[0][i] & (0x1 << __cnt)) ?                           \
+                  (((op2)) & (MASK)) << (__cnt << (SHIFT)) : 0;             \
+        }                                                                   \
+        rv->V[des + j][i] += ans;                                           \
     }
 
-#define VV_LOOP(des, op1, op2, op, SHIFT, MASK, i, j, itr)                 \
-    uint32_t tmp_1 = rv->V[op1 + j][i];                                    \
-    uint32_t tmp_2 = rv->V[op2 + j][i];                                    \
-    rv->V[des + j][i] = 0;                                                 \
-    for (uint8_t ___cnt = 0; ___cnt < itr; ___cnt++) {                     \
-        rv->V[des + j][i] +=                                               \
-            (                                                              \
-                ( (tmp_1 >> (___cnt << (SHIFT))) op (tmp_2) ) & (MASK)     \
-            ) << (___cnt << (SHIFT));                                      \
+#define VI_LOOP(des, op1, op2, op, SHIFT, MASK, i, j, itr, vm)              \
+    uint32_t tmp_1 = rv->V[op1 + j][i];                                     \
+    uint32_t tmp_d = rv->V[des + j][i];                                     \
+    uint32_t ans = 0;                                                       \
+    rv->V[des + j][i] = 0;                                                  \
+    for (uint8_t ___cnt = 0; ___cnt < itr; ___cnt++) {                      \
+        if (ir->vm) {                                                       \
+            ans = ((((tmp_1 >> (___cnt << (SHIFT))) op (op2)) & (MASK))     \
+                   << (___cnt << (SHIFT)));                                 \
+        } else {                                                            \
+            ans = (vm & (0x1 << ___cnt))                                    \
+                      ? ((((tmp_1 >> (___cnt << (SHIFT))) op (op2)) & (MASK))\
+                         << (___cnt << (SHIFT)))                            \
+                      : (tmp_d & (MASK << (___cnt << (SHIFT))));            \
+        }                                                                   \
+        rv->V[des + j][i] += ans;                                           \
     }
 
-#define VV_LOOP_LEFT(des, op1, op2, op, SHIFT, MASK, i, j, itr)            \
-    uint32_t tmp_1 = rv->V[op1 + j][i];                                    \
-    uint32_t tmp_2 = rv->V[op2 + j][i];                                    \
-    for (uint8_t __cnt = 0; __cnt < (rv->csr_vl % 4); __cnt++) {           \
-        assert((des + j) < 32);                                            \
-        rv->V[des + j][i] +=                                               \
-            (                                                              \
-                ( (tmp_1 >> (__cnt << (SHIFT))) op (tmp_2) ) & (MASK)      \
-            ) << (__cnt << (SHIFT));                                       \
+#define VI_LOOP_LEFT(des, op1, op2, op, SHIFT, MASK, i, j, itr, vm)         \
+    uint32_t tmp_1 = rv->V[op1 + j][i];                                     \
+    uint32_t tmp_d = rv->V[des + j][i];                                     \
+    if (rv->csr_vl % itr) {                                                \
+        rv->V[des + j][i] &=                                               \
+            (0xFFFFFFFF << ((rv->csr_vl % itr) << SHIFT));                  \
+    }                                                                       \
+    uint32_t ans = 0;                                                       \
+    for (uint8_t __cnt = 0; __cnt < (rv->csr_vl % itr); __cnt++) {          \
+        assert((des + j) < 32);                                             \
+        if (ir->vm) {                                                       \
+            ans = ((((tmp_1 >> (__cnt << (SHIFT))) op (op2)) & (MASK))      \
+                   << (__cnt << (SHIFT)));                                  \
+        } else {                                                            \
+            ans = (vm & (0x1 << __cnt))                                     \
+                      ? ((((tmp_1 >> (__cnt << (SHIFT))) op (op2)) & (MASK))\
+                         << (__cnt << (SHIFT)))                             \
+                      : (tmp_d & (MASK << (__cnt << (SHIFT))));             \
+        }                                                                   \
+        rv->V[des + j][i] += ans;                                           \
     }
 
-#define VX_LOOP(des, op1, op2, op, SHIFT, MASK, i, j, itr)                 \
-    uint32_t tmp_1 = rv->V[op1 + j][i];                                    \
+#define VV_LOOP(des, op1, op2, op, SHIFT, MASK, i, j, itr, vm)              \
+    uint32_t tmp_1 = rv->V[op1 + j][i];                                     \
+    uint32_t tmp_2 = rv->V[op2 + j][i];                                     \
+    uint32_t tmp_d = rv->V[des + j][i];                                     \
+    uint32_t ans = 0;                                                       \
+    rv->V[des + j][i] = 0;                                                  \
+    for (uint8_t ___cnt = 0; ___cnt < itr; ___cnt++) {                      \
+        if (ir->vm) {                                                       \
+            ans = ((((tmp_1 >> (___cnt << (SHIFT))) op (tmp_2 >> (___cnt << (SHIFT)))) & (MASK))     \
+                   << (___cnt << (SHIFT)));                                 \
+        } else {                                                            \
+            ans = (vm & (0x1 << ___cnt))                                    \
+                      ? ((((tmp_1 >> (___cnt << (SHIFT))) op (tmp_2 >> (___cnt << (SHIFT)))) & (MASK))\
+                         << (___cnt << (SHIFT)))                            \
+                      : (tmp_d & (MASK << (___cnt << (SHIFT))));            \
+        }                                                                   \
+        rv->V[des + j][i] += ans;                                           \
+    }
+
+#define VV_LOOP_LEFT(des, op1, op2, op, SHIFT, MASK, i, j, itr, vm)         \
+    uint32_t tmp_1 = rv->V[op1 + j][i];                                     \
+    uint32_t tmp_2 = rv->V[op2 + j][i];                                     \
+    uint32_t tmp_d = rv->V[des + j][i];                                     \
+    if (rv->csr_vl % itr) {                                                \
+        rv->V[des + j][i] &=                                               \
+            (0xFFFFFFFF << ((rv->csr_vl % itr) << SHIFT));                  \
+    }                                                                       \
+    uint32_t ans = 0;                                                       \
+    for (uint8_t __cnt = 0; __cnt < (rv->csr_vl % itr); __cnt++) {          \
+        assert((des + j) < 32);                                             \
+        if (ir->vm) {                                                       \
+            ans = ((((tmp_1 >> (__cnt << (SHIFT))) op (tmp_2 >> (__cnt << (SHIFT)))) & (MASK))      \
+                   << (__cnt << (SHIFT)));                                  \
+        } else {                                                            \
+            ans = (vm & (0x1 << __cnt))                                     \
+                      ? ((((tmp_1 >> (__cnt << (SHIFT))) op (tmp_2 >> (__cnt << (SHIFT)))) & (MASK))\
+                         << (__cnt << (SHIFT)))                             \
+                      : (tmp_d & (MASK << (__cnt << (SHIFT))));             \
+        }                                                                   \
+        rv->V[des + j][i] += ans;                                           \
+    }
+
+#define VX_LOOP(des, op1, op2, op, SHIFT, MASK, i, j, itr, vm)              \
+    uint32_t tmp_1 = rv->V[op1 + j][i];                                     \
     uint32_t tmp_2 = rv->X[op2];                                           \
-    rv->V[des + j][i] = 0;                                                 \
-    for (uint8_t ___cnt = 0; ___cnt < itr; ___cnt++) {                     \
-        rv->V[des + j][i] +=                                               \
-            (                                                              \
-                ( (tmp_1 >> (___cnt << (SHIFT))) op (tmp_2) ) & (MASK)     \
-            ) << (___cnt << (SHIFT));                                      \
+    uint32_t tmp_d = rv->V[des + j][i];                                     \
+    uint32_t ans = 0;                                                       \
+    rv->V[des + j][i] = 0;                                                  \
+    for (uint8_t ___cnt = 0; ___cnt < itr; ___cnt++) {                      \
+        if (ir->vm) {                                                       \
+            ans = ((((tmp_1 >> (___cnt << (SHIFT))) op (tmp_2)) & (MASK))     \
+                   << (___cnt << (SHIFT)));                                 \
+        } else {                                                            \
+            ans = (vm & (0x1 << ___cnt))                                    \
+                      ? ((((tmp_1 >> (___cnt << (SHIFT))) op (tmp_2))) & (MASK))\
+                         << (___cnt << (SHIFT))                            \
+                      : (tmp_d & (MASK << (___cnt << (SHIFT))));            \
+        }                                                                   \
+        rv->V[des + j][i] += ans;                                           \
     }
 
-#define VX_LOOP_LEFT(des, op1, op2, op, SHIFT, MASK, i, j, itr)            \
-    uint32_t tmp_1 = rv->V[op1 + j][i];                                    \
+#define VX_LOOP_LEFT(des, op1, op2, op, SHIFT, MASK, i, j, itr, vm)         \
+    uint32_t tmp_1 = rv->V[op1 + j][i];                                     \
     uint32_t tmp_2 = rv->X[op2];                                           \
-    for (uint8_t __cnt = 0; __cnt < (rv->csr_vl % 4); __cnt++) {           \
-        assert((des + j) < 32);                                            \
-        rv->V[des + j][i] +=                                               \
-            (                                                              \
-                ( (tmp_1 >> (__cnt << (SHIFT))) op (tmp_2) ) & (MASK)      \
-            ) << (__cnt << (SHIFT));                                       \
+    uint32_t tmp_d = rv->V[des + j][i];                                     \
+    if (rv->csr_vl % itr) {                                                \
+        rv->V[des + j][i] &=                                               \
+            (0xFFFFFFFF << ((rv->csr_vl % itr) << SHIFT));                  \
+    }                                                                       \
+    uint32_t ans = 0;                                                       \
+    for (uint8_t __cnt = 0; __cnt < (rv->csr_vl % itr); __cnt++) {          \
+        assert((des + j) < 32);                                             \
+        if (ir->vm) {                                                       \
+            ans = ((((tmp_1 >> (__cnt << (SHIFT))) op (tmp_2)) & (MASK))      \
+                   << (__cnt << (SHIFT)));                                  \
+        } else {                                                            \
+            ans = (vm & (0x1 << __cnt))                                     \
+                      ? ((((tmp_1 >> (__cnt << (SHIFT))) op (tmp_2))) & (MASK))\
+                         << (__cnt << (SHIFT))                             \
+                      : (tmp_d & (MASK << (__cnt << (SHIFT))));             \
+        }                                                                   \
+        rv->V[des + j][i] += ans;                                           \
     }
 
-#define sew_8b_handler(des, op1, op2, op, op_type)                         \
-{                                                                          \
-    uint8_t __i = 0;                                                       \
-    uint8_t __j = 0;                                                       \
-    for (uint32_t __cnt = 0; (rv->csr_vl - __cnt) >= 4;) {                 \
-        __i %= LEN;                                                        \
-        assert((des + __j) < 32);                                          \
-        op_type##_LOOP(des, op1, op2, op, 3, 0xFF, __i, __j, 4);           \
-        __cnt += 4;                                                        \
-        __i++;                                                             \
-        /* If multiple of 16 */ \
-        if (!(__cnt & ((LEN << 2) - 1))) {                                 \
-            __j++;                                                         \
-            __i = 0;                                                       \
-        }                                                                  \
-    }                                                                      \
-    if (rv->csr_vl % 4) {                                                  \
-        rv->V[des + __j][__i] &=                                           \
-            (0xFFFFFFFF << ((rv->csr_vl % 4) << 3));                       \
-    }                                                                      \
-    op_type##_LOOP_LEFT(des, op1, op2, op, 3, 0xFF, __i, __j, 4);          \
+#define sew_8b_handler(des, op1, op2, op, op_type)                          \
+{                                                                           \
+    uint8_t __i = 0;                                                        \
+    uint8_t __j = 0;                                                        \
+    uint8_t __m = 0;                                                        \
+    uint32_t vm = rv->V[0][__m];    \
+    for (uint32_t __cnt = 0; (rv->csr_vl - __cnt) >= 4;) {                  \
+        __i %= LEN;                                                         \
+        assert((des + __j) < 32);                                           \
+        op_type##_LOOP(des, op1, op2, op, 3, 0xFF, __i, __j, 4, vm);        \
+        __cnt += 4;                                                         \
+        __i++;                                                              \
+        /* If multiple of 16. In sew = 8, 16 * (sew=8) forms a 128b vector  \
+           register */                                                      \
+        if (!(__cnt & ((LEN << 2) - 1))) {                                  \
+            __j++;                                                          \
+            __i = 0;                                                        \
+        }                                                                   \
+        vm >>= 4;                                                           \
+        if(!(__cnt % 32)){     \
+            __m++;          \
+            vm = rv->V[0][__m];     \
+        }  \
+    }                                                                       \
+    op_type##_LOOP_LEFT(des, op1, op2, op, 3, 0xFF, __i, __j, 4, vm);       \
 }
 
-#define sew_16b_handler(des, op1, op2, op, op_type)                        \
-{                                                                          \
-    uint8_t __i = 0;                                                       \
-    uint8_t __j = 0;                                                       \
-    for (uint32_t __cnt = 0; (rv->csr_vl - __cnt) >= 2;) {                 \
-        __i %= LEN;                                                        \
-        assert((des + __j) < 32);                                          \
-        op_type##_LOOP(des, op1, op2, op, 4, 0xFFFF, __i, __j, 2);         \
-        __cnt += 2;                                                        \
-        __i++;                                                             \
-        if (!(__cnt & ((LEN << 1) - 1))) {                                 \
-            __j++;                                                         \
-            __i = 0;                                                       \
-        }                                                                  \
-    }                                                                      \
-    if (rv->csr_vl % 2) {                                                  \
-        rv->V[des + __j][__i] &=                                           \
-            (0xFFFFFFFF << ((rv->csr_vl % 4) << 3));                       \
-    }                                                                      \
-    op_type##_LOOP_LEFT(des, op1, op2, op, 4, 0xFFFF, __i, __j, 2);        \
+#define sew_16b_handler(des, op1, op2, op, op_type)                         \
+{                                                                           \
+    uint8_t __i = 0;                                                        \
+    uint8_t __j = 0;                                                        \
+    uint8_t __m = 0;                                                        \
+    uint32_t vm = rv->V[0][__m];    \
+    for (uint32_t __cnt = 0; (rv->csr_vl - __cnt) >= 2;) {                  \
+        __i %= LEN;                                                         \
+        assert((des + __j) < 32);                                           \
+        op_type##_LOOP(des, op1, op2, op, 4, 0xFFFF, __i, __j, 2, vm);      \
+        __cnt += 2;                                                         \
+        __i++;                                                              \
+        if (!(__cnt & ((LEN << 1) - 1))) {                                  \
+            __j++;                                                          \
+            __i = 0;                                                        \
+        }                                                                   \
+        vm >>= 2;                                                           \
+        if(!(__cnt % 32)){     \
+            __m++;          \
+            vm = rv->V[0][__m];     \
+        }  \
+    }                                                                       \
+    op_type##_LOOP_LEFT(des, op1, op2, op, 4, 0xFFFF, __i, __j, 2, vm);     \
 }
 
-#define sew_32b_handler(des, op1, op2, op, op_type)                        \
-{                                                                          \
-    uint8_t __i = 0;                                                       \
-    uint8_t __j = 0;                                                       \
-    for (uint32_t __cnt = 0; rv->csr_vl > __cnt;) {                        \
-        __i %= LEN;                                                        \
-        assert((des + __j) < 32);                                          \
-        op_type##_LOOP(des, op1, op2, op, 0, 0xFFFFFFFF, __i, __j, 1);     \
-        __cnt += 1;                                                        \
-        __i++;                                                             \
-        if (!(__cnt & (LEN - 1))) {                                        \
-            __j++;                                                         \
-            __i = 0;                                                       \
-        }                                                                  \
-    }                                                                      \
+#define sew_32b_handler(des, op1, op2, op, op_type)                         \
+{                                                                           \
+    uint8_t __i = 0;                                                        \
+    uint8_t __j = 0;                                                        \
+    uint32_t vm = rv->V[0][__i];                                           \
+    for (uint32_t __cnt = 0; rv->csr_vl > __cnt;) {                         \
+        __i %= LEN;                                                         \
+        assert((des + __j) < 32);                                           \
+        op_type##_LOOP(des, op1, op2, op, 0, 0xFFFFFFFF, __i, __j, 1, vm);  \
+        __cnt += 1;                                                         \
+        __i++;                                                              \
+        if (!(__cnt & (LEN - 1))) {                                         \
+            __j++;                                                          \
+            __i = 0;                                                        \
+        }                                                                   \
+        vm >>= 1;                                                           \
+    }                                                                       \
 }
 /* clang-format on */
 
@@ -3247,10 +3341,6 @@ RVOP(
         uint8_t sew = 8 << ((rv->csr_vtype >> 3) & 0b111);
         uint32_t addr = rv->X[ir->rs1];
 
-        /* Clear bits */
-        for (int i = 0; i < LEN; i++) {
-            rv->V[ir->vd][i] = 0;
-        }
         if (ir->eew > sew) {
             /* Illegal */
             rv->csr_vtype = 0x80000000;
@@ -3265,6 +3355,8 @@ RVOP(
                 /* Set illegal when trying to access vector register that is
                  * larger then 31 */
                 assert(ir->vd + j < 32);
+                /* Clear bits for*/
+                rv->V[ir->vd + j][i] = 0;
                 rv->V[ir->vd + j][i] |= rv->io.mem_read_b(rv, addr);
                 rv->V[ir->vd + j][i] |= rv->io.mem_read_b(rv, addr + 1) << 8;
                 rv->V[ir->vd + j][i] |= rv->io.mem_read_b(rv, addr + 2) << 16;
@@ -3278,6 +3370,10 @@ RVOP(
                     i = 0;
                 }
                 addr += 4;
+            }
+            /* vl smaller than a word. */
+            if(rv->csr_vl % 4){
+                rv->V[ir->vd + j][i] %= 0xFFFFFFFF << ((rv->csr_vl % 4) << 3);
             }
             /* Handles data that is narrower then a loop. */
             for (uint32_t cnt = 0; cnt < (rv->csr_vl % 4); cnt++) {
@@ -3294,10 +3390,6 @@ RVOP(
         uint8_t sew = 8 << ((rv->csr_vtype >> 3) & 0b111);
         uint32_t addr = rv->X[ir->rs1];
 
-        /* Clear bits */
-        for (int i = 0; i < LEN; i++) {
-            rv->V[ir->vd][i] = 0;
-        }
         if (ir->eew > sew) {
             /* Illegal */
             rv->csr_vtype = 0x80000000;
@@ -3311,6 +3403,8 @@ RVOP(
                 /* Set illegal when trying to access vector register that is
                  * larger then 31 */
                 assert(ir->vd + j < 32);
+                /* Clear bits */
+                rv->V[ir->vd + j][i] = 0;
                 rv->V[ir->vd + j][i] |= rv->io.mem_read_s(rv, addr);
                 rv->V[ir->vd + j][i] |= rv->io.mem_read_s(rv, addr + 2) << 16;
                 cnt += 2;
@@ -3336,10 +3430,6 @@ RVOP(
         uint8_t sew = 8 << ((rv->csr_vtype >> 3) & 0b111);
         uint32_t addr = rv->X[ir->rs1];
 
-        /* Clear bits */
-        for (int i = 0; i < 4; i++) {
-            rv->V[ir->vd][i] = 0;
-        }
         if (ir->eew > sew) {
             /* Illegal */
             rv->csr_vtype = 0x80000000;
@@ -3353,6 +3443,8 @@ RVOP(
                 /* Set illegal when trying to access vector register that is
                  * larger then 31 */
                 assert(ir->vd + j < 32);
+                /* Clear bits */
+                rv->V[ir->vd + j][i] = 0;
                 rv->V[ir->vd + j][i] |= rv->io.mem_read_w(rv, addr);
                 cnt += 1;
                 i++;
@@ -5931,17 +6023,13 @@ RVOP(
 RVOP(
     vsub_vv,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->vs1, -, VV)
     },
     GEN({/* no operation */}))
 RVOP(
     vsub_vx,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->rs1, -, VX)
     },
     GEN({/* no operation */}))
 RVOP(
@@ -6027,73 +6115,55 @@ RVOP(
 RVOP(
     vand_vv,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->vs1, &, VV)
     },
     GEN({/* no operation */}))
 RVOP(
     vand_vx,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->rs1, &, VX)
     },
     GEN({/* no operation */}))
 RVOP(
     vand_vi,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->imm, &, VI)
     },
     GEN({/* no operation */}))
 RVOP(
     vor_vv,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->vs1, |, VV)
     },
     GEN({/* no operation */}))
 RVOP(
     vor_vx,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->rs1, |, VX)
     },
     GEN({/* no operation */}))
 RVOP(
     vor_vi,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->imm, |, VI)
     },
     GEN({/* no operation */}))
 RVOP(
     vxor_vv,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->vs1, ^, VV)
     },
     GEN({/* no operation */}))
 RVOP(
     vxor_vx,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->rs1, ^, VX)
     },
     GEN({/* no operation */}))
 RVOP(
     vxor_vi,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->imm, ^, VI)
     },
     GEN({/* no operation */}))
 RVOP(
@@ -6283,7 +6353,7 @@ RVOP(
 RVOP(
     vmv_v_i,
     {
-        OPT(ir->vd, 0, ir->imm, +, VI)
+        OPT(ir->vd, 0, ir->imm, +, VMV)
     },
     GEN({/* no operation */}))
 RVOP(
@@ -7075,17 +7145,13 @@ RVOP(
 RVOP(
     vmul_vv,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->vs1, *, VV)
     },
     GEN({/* no operation */}))
 RVOP(
     vmul_vx,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->rs1, *, VX)
     },
     GEN({/* no operation */}))
 RVOP(
