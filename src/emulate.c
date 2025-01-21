@@ -638,6 +638,7 @@ retranslate:
         }
         ir->impl = dispatch_table[ir->opcode];
         ir->pc = block->pc_end;
+        printf("pc:%x \t insn:%x\n", ir->pc, insn);
 
         /* compute the end of pc */
         block->pc_end += is_compressed(insn) ? 2 : 4;
