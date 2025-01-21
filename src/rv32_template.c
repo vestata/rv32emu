@@ -2997,9 +2997,9 @@ RVOP(
         (vl) = (rs1);                            \
     } else if ((rs1) < (2 * vlmax_)) {           \
         /* Fixme:ceil(AVL / 2) <= vl <= VLMAX */ \
-        (vl) = (rs1);                            \
+        (vl) = vlmax_;                            \
     } else {                                     \
-        (vl) = vlmax;                            \
+        (vl) = vlmax_;                            \
     }
 
 RVOP(
@@ -3183,6 +3183,7 @@ RVOP(
         op_type##_LOOP(des, op1, op2, op, 3, 0xFF, __i, __j, 4);           \
         __cnt += 4;                                                        \
         __i++;                                                             \
+        /* If multiple of 16 */ \
         if (!(__cnt & ((LEN << 2) - 1))) {                                 \
             __j++;                                                         \
             __i = 0;                                                       \
