@@ -3140,18 +3140,15 @@ RVOP(
     uint32_t tmp_d = rv->V[des + j][i];                                     \
     uint32_t ans = 0;                                                       \
     rv->V[des + j][i] = 0;                                                  \
-    printf("vm%x\t", vm);   \
     for (uint8_t ___cnt = 0; ___cnt < itr; ___cnt++) {                      \
         if (ir->vm) {                                                       \
             ans = ((((tmp_1 >> (___cnt << (SHIFT))) op (op2)) & (MASK))     \
                    << (___cnt << (SHIFT)));                                 \
-            printf("ans: %x\n", ans);   \
         } else {                                                            \
             ans = (vm & (0x1 << ___cnt))                                    \
                       ? ((((tmp_1 >> (___cnt << (SHIFT))) op (op2)) & (MASK))\
                          << (___cnt << (SHIFT)))                            \
                       : (tmp_d & (MASK << (___cnt << (SHIFT))));            \
-            printf("ans: %x\n", ans);   \
         }                                                                   \
         rv->V[des + j][i] += ans;                                           \
     }
@@ -3223,21 +3220,43 @@ RVOP(
 #define VX_LOOP(des, op1, op2, op, SHIFT, MASK, i, j, itr, vm)              \
     uint32_t tmp_1 = rv->V[op1 + j][i];                                     \
     uint32_t tmp_2 = rv->X[op2];                                           \
-    rv->V[des + j][i] = 0;                                                 \
+    uint32_t tmp_d = rv->V[des + j][i];                                     \
+    uint32_t ans = 0;                                                       \
+    rv->V[des + j][i] = 0;                                                  \
     for (uint8_t ___cnt = 0; ___cnt < itr; ___cnt++) {                      \
-        rv->V[des + j][i] +=                                               \
-            ((((tmp_1 >> (___cnt << (SHIFT))) op (tmp_2)) & (MASK))         \
-             << (___cnt << (SHIFT)));                                      \
+        if (ir->vm) {                                                       \
+            ans = ((((tmp_1 >> (___cnt << (SHIFT))) op (tmp_2)) & (MASK))     \
+                   << (___cnt << (SHIFT)));                                 \
+        } else {                                                            \
+            ans = (vm & (0x1 << ___cnt))                                    \
+                      ? ((((tmp_1 >> (___cnt << (SHIFT))) op (tmp_2))) & (MASK))\
+                         << (___cnt << (SHIFT))                            \
+                      : (tmp_d & (MASK << (___cnt << (SHIFT))));            \
+        }                                                                   \
+        rv->V[des + j][i] += ans;                                           \
     }
 
 #define VX_LOOP_LEFT(des, op1, op2, op, SHIFT, MASK, i, j, itr, vm)         \
     uint32_t tmp_1 = rv->V[op1 + j][i];                                     \
     uint32_t tmp_2 = rv->X[op2];                                           \
-    for (uint8_t __cnt = 0; __cnt < (rv->csr_vl % 4); __cnt++) {            \
+    uint32_t tmp_d = rv->V[des + j][i];                                     \
+    if (rv->csr_vl % itr) {                                                \
+        rv->V[des + j][i] &=                                               \
+            (0xFFFFFFFF << ((rv->csr_vl % itr) << SHIFT));                  \
+    }                                                                       \
+    uint32_t ans = 0;                                                       \
+    for (uint8_t __cnt = 0; __cnt < (rv->csr_vl % itr); __cnt++) {          \
         assert((des + j) < 32);                                             \
-        rv->V[des + j][i] +=                                               \
-            ((((tmp_1 >> (__cnt << (SHIFT))) op (tmp_2)) & (MASK))          \
-             << (__cnt << (SHIFT)));                                       \
+        if (ir->vm) {                                                       \
+            ans = ((((tmp_1 >> (__cnt << (SHIFT))) op (tmp_2)) & (MASK))      \
+                   << (__cnt << (SHIFT)));                                  \
+        } else {                                                            \
+            ans = (vm & (0x1 << __cnt))                                     \
+                      ? ((((tmp_1 >> (__cnt << (SHIFT))) op (tmp_2))) & (MASK))\
+                         << (__cnt << (SHIFT))                             \
+                      : (tmp_d & (MASK << (__cnt << (SHIFT))));             \
+        }                                                                   \
+        rv->V[des + j][i] += ans;                                           \
     }
 
 #define sew_8b_handler(des, op1, op2, op, op_type)                          \
@@ -3364,15 +3383,6 @@ RVOP(
                                         << (cnt << 3);
             }
         }
-        for(int k = 0; k<32; k++){
-            printf("vle8\tvreg: %d\t", k);
-            for (int i = 0; i < 4; i++) {
-                /* read a word a time */
-                printf("%x\t", rv->V[k][i]);
-            }
-        printf("\n");
-        }
-        printf("\n");
     },
     GEN({/* no operation */}))
 RVOP(
@@ -3448,15 +3458,6 @@ RVOP(
                 addr += 4;
             }
         }
-        for(int k = 0; k<32; k++){
-            printf("vle32\tvreg: %d\t", k);
-            for (int i = 0; i < 4; i++) {
-                /* read a word a time */
-                printf("%x\t", rv->V[k][i]);
-            }
-        printf("\n");
-        }
-        printf("\n");
     },
     GEN({/* no operation */}))
 RVOP(
@@ -6006,15 +6007,6 @@ RVOP(
     vadd_vv,
     {
         OPT(ir->vd, ir->vs2, ir->vs1, +, VV)
-        for(int k = 0; k<32; k++){
-            printf("vreg: %d\t", k);
-            for (int i = 0; i < 4; i++) {
-                /* read a word a time */
-                printf("%x\t", rv->V[k][i]);
-            }
-        printf("\n");
-        }
-        printf("\n");
     },
     GEN({/* no operation */}))
 RVOP(
@@ -6026,17 +6018,7 @@ RVOP(
 RVOP(
     vadd_vi,
     {
-        printf("vl:%d\t", rv->csr_vl);
         OPT(ir->vd, ir->vs2, ir->imm, +, VI)
-        for(int k = 0; k<32; k++){
-            printf("vadd\tvreg: %d\t", k);
-            for (int i = 0; i < 4; i++) {
-                /* read a word a time */
-                printf("%x\t", rv->V[k][i]);
-            }
-        printf("\n");
-        }
-        printf("\n");
     },
     GEN({/* no operation */}))
 RVOP(
@@ -6138,57 +6120,37 @@ RVOP(
 RVOP(
     vand_vv,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->vs1, &, VV)
     },
     GEN({/* no operation */}))
 RVOP(
     vand_vx,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->rs1, &, VX)
     },
     GEN({/* no operation */}))
 RVOP(
     vand_vi,
     {
-        printf("\n\nvl: %d\n\n\n", rv->csr_vl);
         OPT(ir->vd, ir->vs2, ir->imm, &, VI)
-        for(int k = 0; k<32; k++){
-            printf("vand\tvreg: %d\t", k);
-            for (int i = 0; i < 4; i++) {
-                /* read a word a time */
-                printf("%x\t", rv->V[k][i]);
-            }
-        printf("\n");
-        }
-        printf("\n");
     },
     GEN({/* no operation */}))
 RVOP(
     vor_vv,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->vs1, |, VV)
     },
     GEN({/* no operation */}))
 RVOP(
     vor_vx,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->rs1, |, VX)
     },
     GEN({/* no operation */}))
 RVOP(
     vor_vi,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->imm, |, VI)
     },
     GEN({/* no operation */}))
 RVOP(
@@ -6210,9 +6172,7 @@ RVOP(
 RVOP(
     vxor_vi,
     {
-        for (int i = 0; i < 4; i++) {
-            rv->V[rv_reg_zero][i] = 0;
-        }
+        OPT(ir->vd, ir->vs2, ir->imm, ^, VI)
     },
     GEN({/* no operation */}))
 RVOP(
