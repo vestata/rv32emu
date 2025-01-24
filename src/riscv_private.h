@@ -219,7 +219,7 @@ struct riscv_internal {
 #endif
 
 #if RV32_HAS(EXT_V)
-    vlen128 V[N_RV_REGS];
+    vreg_t V[N_RV_REGS];
 
     uint32_t csr_vstart; /* +Vector start position */
     uint32_t csr_vxsat;  /* +Fixed-Point Saturate Flag */

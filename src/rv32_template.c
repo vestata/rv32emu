@@ -2990,8 +2990,12 @@ RVOP(
 
 
 #if RV32_HAS(EXT_V)
-#define vlen 128
-#define LEN ((vlen) >> (5))
+#ifndef VLEN
+#define VLEN 128
+#endif
+
+#define LEN ((VLEN) >> (5))
+
 #define vl_setting(vlmax_, rs1, vl)              \
     if ((rs1) <= vlmax_) {                       \
         (vl) = (rs1);                            \
@@ -3014,8 +3018,8 @@ RVOP(
             return true;
         }
         uint16_t vlmax = (v_lmul < 4)
-                             ? ((1 << v_lmul) * vlen) >> (3 + v_sew)
-                             : (vlen >> (3 + v_sew) >> (3 - (v_lmul - 5)));
+                             ? ((1 << v_lmul) * VLEN) >> (3 + v_sew)
+                             : (VLEN >> (3 + v_sew) >> (3 - (v_lmul - 5)));
         if (ir->rs1) {
             vl_setting(vlmax, rv->X[ir->rs1], rv->csr_vl);
             rv->csr_vtype = ir->zimm;
@@ -3044,8 +3048,8 @@ RVOP(
             return true;
         }
         uint16_t vlmax = (v_lmul < 4)
-                             ? ((1 << v_lmul) * vlen) >> (3 + v_sew)
-                             : (vlen >> (3 + v_sew) >> (3 - (v_lmul - 5)));
+                             ? ((1 << v_lmul) * VLEN) >> (3 + v_sew)
+                             : (VLEN >> (3 + v_sew) >> (3 - (v_lmul - 5)));
         if (ir->rs1) {
             vl_setting(vlmax, ir->rs1, rv->csr_vl);
             rv->csr_vtype = ir->zimm;
@@ -3073,8 +3077,8 @@ RVOP(
             return true;
         }
         uint16_t vlmax = (v_lmul < 4)
-                             ? ((1 << v_lmul) * vlen) >> (3 + v_sew)
-                             : (vlen >> (3 + v_sew) >> (3 - (v_lmul - 5)));
+                             ? ((1 << v_lmul) * VLEN) >> (3 + v_sew)
+                             : (VLEN >> (3 + v_sew) >> (3 - (v_lmul - 5)));
         if (rv->X[ir->rs1]) {
             vl_setting(vlmax, rv->X[ir->rs1], rv->csr_vl);
             rv->csr_vtype = rv->X[ir->rs2];
