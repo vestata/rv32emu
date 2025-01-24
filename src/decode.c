@@ -1940,6 +1940,14 @@ static inline bool op_cfsw(rv_insn_t *ir, const uint32_t insn)
 
 #if RV32_HAS(EXT_V) /* (RV32_HAS(EXT_V) */
 
+/* 
+* Sign extened vector immediate 
+*/
+static inline int32_t decode_v_imm(const uint32_t insn)
+{
+    return ((int32_t)((insn << 12) & FR4_RS3)) >> 27;
+}
+
 /* decode vsetvli zimm[10:0] field
  * zimm = inst[30:20]
  */
@@ -2048,7 +2056,7 @@ static inline void decode_vvtype(rv_insn_t *ir, const uint32_t insn)
 static inline void decode_vitype(rv_insn_t *ir, const uint32_t insn)
 {
     ir->vs2 = decode_rs2(insn);
-    ir->imm = decode_rs1(insn);
+    ir->imm = decode_v_imm(insn);
     ir->vd = decode_rd(insn);
     ir->vm = decode_vm(insn);
 }
@@ -4200,18 +4208,14 @@ bool rv_decode(rv_insn_t *ir, uint32_t insn)
     /* Acording to https://github.com/riscvarchive/riscv-v-spec/blob/master/inst-table.adoc this table is for function6. */
     //  000        001        010        011        100        101        110        111
         OP(000000), OP(000001), OP(000010), OP(000011), OP(000100), OP(000101), OP(000110), OP(000111),  // 000
-        OP(001000), OP(001001), OP(001010), OP(001011), OP(001100), OP(unimp), OP(001110), OP(001111),  // 001
-        OP(010000), OP(010001), OP(010010), OP(010011), OP(010100), OP(unimp), OP(unimp), OP(010111),  // 010
+        OP(001000), OP(001001), OP(001010), OP(001011), OP(001100), OP(unimp), OP(001110), OP(001111),   // 001
+        OP(010000), OP(010001), OP(010010), OP(010011), OP(010100), OP(unimp), OP(unimp), OP(010111),    // 010
         OP(011000), OP(011001), OP(011010), OP(011011), OP(011100), OP(011101), OP(011110), OP(011111),  // 011
         OP(100000), OP(100001), OP(100010), OP(100011), OP(100100), OP(100101), OP(100110), OP(100111),  // 100
         OP(101000), OP(101001), OP(101010), OP(101011), OP(101100), OP(101101), OP(101110), OP(101111),  // 101
         OP(110000), OP(110001), OP(110010), OP(110011), OP(110100), OP(110101), OP(110110), OP(110111),  // 110
-        OP(111000), OP(unimp), OP(111010), OP(111011), OP(111100), OP(111101), OP(111110), OP(111111)   // 111
+        OP(111000), OP(unimp), OP(111010), OP(111011), OP(111100), OP(111101), OP(111110), OP(111111)    // 111
     };
-    // /* RVV vector opcode map */
-    // static const decode_t MOP_table[] = {
-
-    // }
 #endif
     /* clang-format on */
 
