@@ -290,8 +290,10 @@ typedef uint32_t riscv_exception_t;
 typedef softfloat_float32_t riscv_float_t;
 #endif
 #if RV32_HAS(EXT_V)
-/* Fixme:Temporary set vl as 128 */
-typedef uint32_t vlen128[4];
+#ifndef VLEN
+#define VLEN 128
+#endif
+typedef uint32_t vreg_t[VLEN / 32];
 #endif
 
 /* memory read handlers */
