@@ -2990,9 +2990,6 @@ RVOP(
 
 
 #if RV32_HAS(EXT_V)
-#ifndef VLEN
-#define VLEN 128
-#endif
 
 #define LEN ((VLEN) >> (5))
 

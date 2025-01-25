@@ -3,10 +3,10 @@
  * "LICENSE" for information on usage and redistribution of this file.
  */
 
-#include "decode.h"
 #include <assert.h>
-#include <math.h>
 #include <stdlib.h>
+
+#include "decode.h"
 #include "riscv_private.h"
 
 /* decode rd field
@@ -362,7 +362,6 @@ static inline void decode_jtype(rv_insn_t *ir, const uint32_t insn)
 
 
 #if RV32_HAS(EXT_F)
-
 /* decode R4-type rs3 field
  * rs3 = inst[31:27]
  */
@@ -1193,8 +1192,6 @@ static inline bool op_amo(rv_insn_t *ir, const uint32_t insn)
 #endif /* RV32_HAS(EXT_A) */
 
 #if RV32_HAS(EXT_F)
-
-
 /* OP-FP: R-type
  *  31    27 26   25 24   20 19   15 14    12 11   7 6      0
  * | funct5 |  fmt  |  rs2  |  rs1  |   rm   |  rd  | opcode |
@@ -1937,15 +1934,11 @@ static inline bool op_cfsw(rv_insn_t *ir, const uint32_t insn)
 #define op_cflwsp OP_UNIMP
 #endif /* RV32_HAS(EXT_C) && RV32_HAS(EXT_F) */
 
-
-#if RV32_HAS(EXT_V) /* (RV32_HAS(EXT_V) */
-
-/* 
-* Sign extened vector immediate 
-*/
+#if RV32_HAS(EXT_V)
+/* Sign-extened vector immediate */
 static inline int32_t decode_v_imm(const uint32_t insn)
 {
-    return ((int32_t)((insn << 12) & FR4_RS3)) >> 27;
+    return ((int32_t) ((insn << 12) & FR4_RS3)) >> 27;
 }
 
 /* decode vsetvli zimm[10:0] field
@@ -3975,9 +3968,7 @@ static inline bool op_111111(rv_insn_t *ir, const uint32_t insn)
     }
     return true;
 }
-
-#endif /* (RV32_HAS(EXT_V) */
-
+#endif
 
 /* Fixme:Temproary move op_load/store_fp out of EXT_F */
 /* LOAD-FP: I-type
@@ -3987,9 +3978,6 @@ static inline bool op_111111(rv_insn_t *ir, const uint32_t insn)
 static inline bool op_load_fp(rv_insn_t *ir, const uint32_t insn)
 {
 #if RV32_HAS(EXT_V)
-    /* Fixme: The implementation now is just using switch statement, since there
-     * are multiple duplicate elements in vectore load/store instruction. I'm
-     * hoping to build clean and efficient code. */
     /* inst nf mew mop vm   rs2/vs1  rs1   width vd  opcode
      * ----+---+---+---+--+---------+-----+-----+---+--------
      * VL*   nf mew mop vm    lumop  rs1   width vd  0000111
@@ -4013,7 +4001,7 @@ static inline bool op_load_fp(rv_insn_t *ir, const uint32_t insn)
                 }
                 break;
             case 0b01000:
-                ir->opcode = rv_insn_vl1re8_v + 4 * eew + log2(nf + 1);
+                ir->opcode = rv_insn_vl1re8_v + 4 * eew + ilog2(nf + 1);
                 break;
             case 0b01011:
                 ir->opcode = rv_insn_vlm_v;
@@ -4058,7 +4046,6 @@ static inline bool op_load_fp(rv_insn_t *ir, const uint32_t insn)
         }
         return true;
     }
-
 #endif
 
     /* inst imm[11:0] rs1 width rd opcode
@@ -4072,7 +4059,6 @@ static inline bool op_load_fp(rv_insn_t *ir, const uint32_t insn)
     ir->opcode = rv_insn_flw;
     return true;
 }
-
 
 /* STORE-FP: S-type
  *  31       25 24   20 19   15 14   12 11       7 6      0
@@ -4107,7 +4093,7 @@ static inline bool op_store_fp(rv_insn_t *ir, const uint32_t insn)
                 }
                 break;
             case 0b01000:
-                ir->opcode = rv_insn_vs1r_v + log2(nf + 1);
+                ir->opcode = rv_insn_vs1r_v + ilog2(nf + 1);
                 break;
             case 0b01011:
                 ir->opcode = rv_insn_vsm_v;
@@ -4145,8 +4131,8 @@ static inline bool op_store_fp(rv_insn_t *ir, const uint32_t insn)
         }
         return true;
     }
-
 #endif
+
     /* inst imm[11:5] rs2 rs1 width imm[4:0] opcode
      * ----+---------+---+---+-----+--------+-------
      * FSW  imm[11:5] rs2 rs1 010   imm[4:0] 0100111
@@ -4203,9 +4189,9 @@ bool rv_decode(rv_insn_t *ir, uint32_t insn)
 #endif
 
 #if RV32_HAS(EXT_V)
-    /* RVV vector opcode map */
+    /* RVV vector function6 map */
     static const decode_t rvv_jump_table[] = {
-    /* Acording to https://github.com/riscvarchive/riscv-v-spec/blob/master/inst-table.adoc this table is for function6. */
+    /* Acording to https://github.com/riscvarchive/riscv-v-spec/blob/master/inst-table.adoc */
     //  000        001        010        011        100        101        110        111
         OP(000000), OP(000001), OP(000010), OP(000011), OP(000100), OP(000101), OP(000110), OP(000111),  // 000
         OP(001000), OP(001001), OP(001010), OP(001011), OP(001100), OP(unimp), OP(001110), OP(001111),   // 001
