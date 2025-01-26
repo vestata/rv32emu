@@ -238,7 +238,7 @@ enum op_field {
         _(vsetvli, 0, 4, 0, ENC(rs1, rd))              \
         _(vsetivli, 0, 4, 0, ENC(rs1, rd))             \
         _(vsetvl, 0, 4, 0, ENC(rs1, rd))               \
-        /* Vectore Load */                             \
+        /* Vector Load */                              \
         _(vle8_v, 0, 4, 0, ENC(rs1, vd))               \
         _(vle16_v, 0, 4, 0, ENC(rs1, vd))              \
         _(vle32_v, 0, 4, 0, ENC(rs1, vd))              \
@@ -416,7 +416,7 @@ enum op_field {
         _(vloxseg6ei64_v, 0, 4, 0, ENC(rs1, vd))       \
         _(vloxseg7ei64_v, 0, 4, 0, ENC(rs1, vd))       \
         _(vloxseg8ei64_v, 0, 4, 0, ENC(rs1, vd))       \
-        /* Vectore store */                            \
+        /* Vector store */                             \
         _(vse8_v, 0, 4, 0, ENC(rs1, vd))               \
         _(vse16_v, 0, 4, 0, ENC(rs1, vd))              \
         _(vse32_v, 0, 4, 0, ENC(rs1, vd))              \
@@ -910,7 +910,7 @@ enum {
     FCSS_IMM     = 0b00000000000000000001111110000000,
     //               ....xxxx....xxxx....xxxx....xxxx
     FCJ_IMM      = 0b00000000000000000001111111111100,
-    //               ....xxxx....xxxx....xxxx....xxxx,
+    //               ....xxxx....xxxx....xxxx....xxxx
     FV_ZIMM_30_20 = 0b01111111111100000000000000000000,
     FV_ZIMM_29_20 = 0b00111111111100000000000000000000,
     FV_VM        = 0b00000010000000000000000000000000,
@@ -947,7 +947,7 @@ typedef struct rv_insn {
     };
     uint8_t rd, rs1, rs2;
     /* store IR list */
-    uint16_t opcode;
+    uint8_t opcode;
 
 #if RV32_HAS(EXT_C)
     uint8_t shamt;

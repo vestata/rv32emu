@@ -1832,5 +1832,4 @@ CONSTOPT(vfwmsac_vv, {})
 CONSTOPT(vfwmsac_vf, {})
 CONSTOPT(vfwnmsac_vv, {})
 CONSTOPT(vfwnmsac_vf, {})
-
 #endif

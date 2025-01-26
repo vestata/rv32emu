@@ -3036,7 +3036,7 @@ RVOP(
     {
         uint8_t v_lmul = ir->zimm & 0b111;
         uint8_t v_sew = (ir->zimm >> 3) & 0b111;
-        /* Fixme: Implement vta, vma */
+        /* FIXME: Implement vta, vma */
 
         if (v_lmul == 4 || v_sew >= 4) {
             /* Illegal setting */
@@ -6365,7 +6365,6 @@ RVOP(
 RVOP(
     vmv_v_i,
     {
-        /* Fixme */
         OPT(ir->vd, 0, ir->imm, +, VMV)
     },
     GEN({/* no operation */}))
@@ -7181,16 +7180,12 @@ RVOP(
         }
     },
     GEN({/* no operation */}))
-#define op_mulh(a, b)                                \
-    ({                                               \
-        uint64_t tmp = ((uint64_t)(a) * (uint64_t)(b)); \
-        tmp >> (8 << ((rv->csr_vtype >> 3) & 0b111));  \
-    })
-/* Fixme */
 RVOP(
     vmulh_vv,
     {
-        OPT(ir->vd, ir->vs2, ir->vs1, mulh, VV)
+        for (int i = 0; i < 4; i++) {
+            rv->V[rv_reg_zero][i] = 0;
+        }
     },
     GEN({/* no operation */}))
 RVOP(
@@ -7201,7 +7196,6 @@ RVOP(
         }
     },
     GEN({/* no operation */}))
-#undef op_mulh
 RVOP(
     vmadd_vv,
     {

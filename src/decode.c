@@ -108,6 +108,16 @@ static inline int32_t decode_stype_imm(const uint32_t insn)
     return ((int32_t) dst) >> 20;
 }
 
+#if RV32_HAS(EXT_F)
+/* decode R4-type rs3 field
+ * rs3 = inst[31:27]
+ */
+static inline uint32_t decode_r4type_rs3(const uint32_t insn)
+{
+    return (insn & FR4_RS3) >> 27;
+}
+#endif
+
 #if RV32_HAS(EXT_C)
 enum {
     /* clang-format off */
@@ -360,16 +370,7 @@ static inline void decode_jtype(rv_insn_t *ir, const uint32_t insn)
     ir->rd = decode_rd(insn);
 }
 
-
 #if RV32_HAS(EXT_F)
-/* decode R4-type rs3 field
- * rs3 = inst[31:27]
- */
-static inline uint32_t decode_r4type_rs3(const uint32_t insn)
-{
-    return (insn & FR4_RS3) >> 27;
-}
-
 /* decode R4-type
  *  31   27 26    25 24   20 19   15 14    12 11   7 6      0
  * |  rs3  | funct2 |  rs2  |  rs1  | funct3 |  rd  | opcode |
@@ -1192,6 +1193,42 @@ static inline bool op_amo(rv_insn_t *ir, const uint32_t insn)
 #endif /* RV32_HAS(EXT_A) */
 
 #if RV32_HAS(EXT_F)
+/* LOAD-FP: I-type
+ *  31       20 19   15 14   12 11   7 6      0
+ * | imm[11:0] |  rs1  | width |  rd  | opcode |
+ */
+static inline bool op_load_fp(rv_insn_t *ir, const uint32_t insn)
+{
+    /* inst imm[11:0] rs1 width rd opcode
+     * ----+---------+---+-----+--+-------
+     * FLW  imm[11:0] rs1 010   rd 0000111
+     */
+
+    /* decode I-type */
+    decode_itype(ir, insn);
+
+    ir->opcode = rv_insn_flw;
+    return true;
+}
+
+/* STORE-FP: S-type
+ *  31       25 24   20 19   15 14   12 11       7 6      0
+ * | imm[11:5] |  rs2  |  rs1  | width | imm[4:0] | opcode |
+ */
+static inline bool op_store_fp(rv_insn_t *ir, const uint32_t insn)
+{
+    /* inst imm[11:5] rs2 rs1 width imm[4:0] opcode
+     * ----+---------+---+---+-----+--------+-------
+     * FSW  imm[11:5] rs2 rs1 010   imm[4:0] 0100111
+     */
+
+    /* decode S-type */
+    decode_stype(ir, insn);
+
+    ir->opcode = rv_insn_fsw;
+    return true;
+}
+
 /* OP-FP: R-type
  *  31    27 26   25 24   20 19   15 14    12 11   7 6      0
  * | funct5 |  fmt  |  rs2  |  rs1  |   rm   |  rd  | opcode |
@@ -2166,7 +2203,7 @@ static inline bool op_000000(rv_insn_t *ir, const uint32_t insn)
         decode_vxtype(ir, insn);
         ir->opcode = rv_insn_vadd_vx;
         break;
-    case 5: /* Fixme:vfadd.vf */
+    case 5:
         decode_vxtype(ir, insn);
         ir->opcode = rv_insn_vfadd_vf;
         break;
@@ -2603,8 +2640,7 @@ static inline bool op_010000(rv_insn_t *ir, const uint32_t insn)
         ir->opcode = rv_insn_vadc_vvm;
         break;
     case 1:
-        /* VWFUNARY0 */
-        /* Fixme */
+        /* FIXME: Implement the decoding for VWFUNARY0. */
     case 2:
         /* VWXUNARY0 */
         switch (decode_rs1(insn)) {
@@ -2633,8 +2669,7 @@ static inline bool op_010000(rv_insn_t *ir, const uint32_t insn)
         ir->opcode = rv_insn_vadc_vxm;
         break;
     case 5:
-        /* VRFUNARY0 */
-        /* Fixme */
+        /* FIXME: Implement the decoding for VRFUNARY0. */
     case 6:
         /* VRXUNARY0 */
         ir->rd = decode_rd(insn);
@@ -2681,12 +2716,10 @@ static inline bool op_010010(rv_insn_t *ir, const uint32_t insn)
         ir->opcode = rv_insn_vsbc_vvm;
         break;
     case 1:
-        /* VFUNARY0 */
-        /* Fixme */
+        /* FIXME: Implement the decoding for VFUNARY0. */
         break;
     case 2:
-        /* VXUNARY0 */
-        /* Fixme */
+        /* FIXME: Implement the decoding VXUNARY0. */
     case 3:
     case 4:
         decode_vxtype(ir, insn);
@@ -2708,8 +2741,7 @@ static inline bool op_010011(rv_insn_t *ir, const uint32_t insn)
         ir->opcode = rv_insn_vmsbc_vv;
         break;
     case 1:
-        /* VFUNARY1 */
-        /* Fixme */
+        /* FIXME: Implement the decoding for VFUNARY1. */
     case 2:
     case 3:
     case 4:
@@ -3284,7 +3316,7 @@ static inline bool op_100111(rv_insn_t *ir, const uint32_t insn)
         ir->opcode = rv_insn_vmulh_vv;
         break;
     case 3:
-        /* Fixme */
+        /* FIXME: Implement the decoding for vmv<nr>r. */
     case 4:
         decode_vxtype(ir, insn);
         ir->opcode = rv_insn_vsmul_vx;
@@ -3970,7 +4002,7 @@ static inline bool op_111111(rv_insn_t *ir, const uint32_t insn)
 }
 #endif
 
-/* Fixme:Temproary move op_load/store_fp out of EXT_F */
+/* FIXME:Temproary move op_load/store_fp out of EXT_F */
 /* LOAD-FP: I-type
  *  31       20 19   15 14   12 11   7 6      0
  * | imm[11:0] |  rs1  | width |  rd  | opcode |
@@ -4067,7 +4099,7 @@ static inline bool op_load_fp(rv_insn_t *ir, const uint32_t insn)
 static inline bool op_store_fp(rv_insn_t *ir, const uint32_t insn)
 {
 #if RV32_HAS(EXT_V)
-    /* Fixme: The implementation now is just using switch statement, since there
+    /* FIXME: The implementation now is just using switch statement, since there
      * are multiple duplicate elements in vectore load/store instruction. I'm
      * hoping to build clean and efficient code. */
     /* inst nf mew mop vm   rs2/vs1  rs1   width vs3  opcode
